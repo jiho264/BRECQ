@@ -15,6 +15,7 @@ class BaseQuantBlock(nn.Module):
     and quantization after the elemental-wise add operation, therefore, we
     put this part in this class.
     """
+
     def __init__(self, act_quant_params: dict = {}):
         super().__init__()
         self.use_weight_quant = False
@@ -39,11 +40,24 @@ class QuantBasicBlock(BaseQuantBlock):
     """
     Implementation of Quantized BasicBlock used in ResNet-18 and ResNet-34.
     """
-    def __init__(self, basic_block: BasicBlock, weight_quant_params: dict = {}, act_quant_params: dict = {}):
+
+    def __init__(
+        self,
+        basic_block: BasicBlock,
+        weight_quant_params: dict = {},
+        act_quant_params: dict = {},
+    ):
         super().__init__(act_quant_params)
-        self.conv1 = QuantModule(basic_block.conv1, weight_quant_params, act_quant_params)
+        self.conv1 = QuantModule(
+            basic_block.conv1, weight_quant_params, act_quant_params
+        )
         self.conv1.activation_function = basic_block.relu1
-        self.conv2 = QuantModule(basic_block.conv2, weight_quant_params, act_quant_params, disable_act_quant=True)
+        self.conv2 = QuantModule(
+            basic_block.conv2,
+            weight_quant_params,
+            act_quant_params,
+            disable_act_quant=True,
+        )
 
         # modify the activation function to ReLU
         self.activation_function = basic_block.relu2
@@ -51,8 +65,12 @@ class QuantBasicBlock(BaseQuantBlock):
         if basic_block.downsample is None:
             self.downsample = None
         else:
-            self.downsample = QuantModule(basic_block.downsample[0], weight_quant_params, act_quant_params,
-                                          disable_act_quant=True)
+            self.downsample = QuantModule(
+                basic_block.downsample[0],
+                weight_quant_params,
+                act_quant_params,
+                disable_act_quant=True,
+            )
         # copying all attributes in original block
         self.stride = basic_block.stride
 
@@ -72,13 +90,27 @@ class QuantBottleneck(BaseQuantBlock):
     Implementation of Quantized Bottleneck Block used in ResNet-50, -101 and -152.
     """
 
-    def __init__(self, bottleneck: Bottleneck, weight_quant_params: dict = {}, act_quant_params: dict = {}):
+    def __init__(
+        self,
+        bottleneck: Bottleneck,
+        weight_quant_params: dict = {},
+        act_quant_params: dict = {},
+    ):
         super().__init__(act_quant_params)
-        self.conv1 = QuantModule(bottleneck.conv1, weight_quant_params, act_quant_params)
+        self.conv1 = QuantModule(
+            bottleneck.conv1, weight_quant_params, act_quant_params
+        )
         self.conv1.activation_function = bottleneck.relu1
-        self.conv2 = QuantModule(bottleneck.conv2, weight_quant_params, act_quant_params)
+        self.conv2 = QuantModule(
+            bottleneck.conv2, weight_quant_params, act_quant_params
+        )
         self.conv2.activation_function = bottleneck.relu2
-        self.conv3 = QuantModule(bottleneck.conv3, weight_quant_params, act_quant_params, disable_act_quant=True)
+        self.conv3 = QuantModule(
+            bottleneck.conv3,
+            weight_quant_params,
+            act_quant_params,
+            disable_act_quant=True,
+        )
 
         # modify the activation function to ReLU
         self.activation_function = bottleneck.relu3
@@ -86,8 +118,12 @@ class QuantBottleneck(BaseQuantBlock):
         if bottleneck.downsample is None:
             self.downsample = None
         else:
-            self.downsample = QuantModule(bottleneck.downsample[0], weight_quant_params, act_quant_params,
-                                          disable_act_quant=True)
+            self.downsample = QuantModule(
+                bottleneck.downsample[0],
+                weight_quant_params,
+                act_quant_params,
+                disable_act_quant=True,
+            )
         # copying all attributes in original block
         self.stride = bottleneck.stride
 
@@ -108,20 +144,34 @@ class QuantResBottleneckBlock(BaseQuantBlock):
     Implementation of Quantized Bottleneck Blockused in RegNetX (no SE module).
     """
 
-    def __init__(self, bottleneck: ResBottleneckBlock, weight_quant_params: dict = {}, act_quant_params: dict = {}):
+    def __init__(
+        self,
+        bottleneck: ResBottleneckBlock,
+        weight_quant_params: dict = {},
+        act_quant_params: dict = {},
+    ):
         super().__init__(act_quant_params)
         self.conv1 = QuantModule(bottleneck.f.a, weight_quant_params, act_quant_params)
         self.conv1.activation_function = bottleneck.f.a_relu
         self.conv2 = QuantModule(bottleneck.f.b, weight_quant_params, act_quant_params)
         self.conv2.activation_function = bottleneck.f.b_relu
-        self.conv3 = QuantModule(bottleneck.f.c, weight_quant_params, act_quant_params, disable_act_quant=True)
+        self.conv3 = QuantModule(
+            bottleneck.f.c,
+            weight_quant_params,
+            act_quant_params,
+            disable_act_quant=True,
+        )
 
         # modify the activation function to ReLU
         self.activation_function = bottleneck.relu
 
         if bottleneck.proj_block:
-            self.downsample = QuantModule(bottleneck.proj, weight_quant_params, act_quant_params,
-                                          disable_act_quant=True)
+            self.downsample = QuantModule(
+                bottleneck.proj,
+                weight_quant_params,
+                act_quant_params,
+                disable_act_quant=True,
+            )
         else:
             self.downsample = None
         # copying all attributes in original block
@@ -145,7 +195,12 @@ class QuantInvertedResidual(BaseQuantBlock):
     Inverted Residual does not have activation function.
     """
 
-    def __init__(self, inv_res: InvertedResidual, weight_quant_params: dict = {}, act_quant_params: dict = {}):
+    def __init__(
+        self,
+        inv_res: InvertedResidual,
+        weight_quant_params: dict = {},
+        act_quant_params: dict = {},
+    ):
         super().__init__(act_quant_params)
 
         self.use_res_connect = inv_res.use_res_connect
@@ -153,14 +208,24 @@ class QuantInvertedResidual(BaseQuantBlock):
         if self.expand_ratio == 1:
             self.conv = nn.Sequential(
                 QuantModule(inv_res.conv[0], weight_quant_params, act_quant_params),
-                QuantModule(inv_res.conv[3], weight_quant_params, act_quant_params, disable_act_quant=True),
+                QuantModule(
+                    inv_res.conv[3],
+                    weight_quant_params,
+                    act_quant_params,
+                    disable_act_quant=True,
+                ),
             )
             self.conv[0].activation_function = nn.ReLU6()
         else:
             self.conv = nn.Sequential(
                 QuantModule(inv_res.conv[0], weight_quant_params, act_quant_params),
                 QuantModule(inv_res.conv[3], weight_quant_params, act_quant_params),
-                QuantModule(inv_res.conv[6], weight_quant_params, act_quant_params, disable_act_quant=True),
+                QuantModule(
+                    inv_res.conv[6],
+                    weight_quant_params,
+                    act_quant_params,
+                    disable_act_quant=True,
+                ),
             )
             self.conv[0].activation_function = nn.ReLU6()
             self.conv[1].activation_function = nn.ReLU6()

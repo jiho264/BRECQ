@@ -8,7 +8,7 @@ class AdaRoundQuantizer(nn.Module):
     Adaptive Rounding Quantizer, used to optimize the rounding policy
     by reconstructing the intermediate output.
     Based on
-     Up or Down? Adaptive Rounding for Post-Training Quantization: https://arxiv.org/abs/2004.10568
+    Up or Down? Adaptive Rounding for Post-Training Quantization: https://arxiv.org/abs/2004.10568
 
     :param uaq: UniformAffineQuantizer, used to initialize quantization parameters in this quantizer
     :param round_mode: controls the forward pass in this quantizer

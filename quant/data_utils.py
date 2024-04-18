@@ -5,8 +5,15 @@ from quant.quant_model import QuantModel
 from quant.quant_block import BaseQuantBlock
 
 
-def save_inp_oup_data(model: QuantModel, layer: Union[QuantModule, BaseQuantBlock], cali_data: torch.Tensor,
-                      asym: bool = False, act_quant: bool = False, batch_size: int = 32, keep_gpu: bool = True):
+def save_inp_oup_data(
+    model: QuantModel,
+    layer: Union[QuantModule, BaseQuantBlock],
+    cali_data: torch.Tensor,
+    asym: bool = False,
+    act_quant: bool = False,
+    batch_size: int = 32,
+    keep_gpu: bool = True,
+):
     """
     Save input data and output data of a particular layer/block over calibration dataset.
 
@@ -20,12 +27,14 @@ def save_inp_oup_data(model: QuantModel, layer: Union[QuantModule, BaseQuantBloc
     :return: input and output data
     """
     device = next(model.parameters()).device
-    get_inp_out = GetLayerInpOut(model, layer, device=device, asym=asym, act_quant=act_quant)
+    get_inp_out = GetLayerInpOut(
+        model, layer, device=device, asym=asym, act_quant=act_quant
+    )
     cached_batches = []
     torch.cuda.empty_cache()
 
     for i in range(int(cali_data.size(0) / batch_size)):
-        cur_inp, cur_out = get_inp_out(cali_data[i * batch_size:(i + 1) * batch_size])
+        cur_inp, cur_out = get_inp_out(cali_data[i * batch_size : (i + 1) * batch_size])
         cached_batches.append((cur_inp.cpu(), cur_out.cpu()))
 
     cached_inps = torch.cat([x[0] for x in cached_batches])
@@ -37,9 +46,15 @@ def save_inp_oup_data(model: QuantModel, layer: Union[QuantModule, BaseQuantBloc
     return cached_inps, cached_outs
 
 
-def save_grad_data(model: QuantModel, layer: Union[QuantModule, BaseQuantBlock], cali_data: torch.Tensor,
-                   damping: float = 1., act_quant: bool = False, batch_size: int = 32,
-                   keep_gpu: bool = True):
+def save_grad_data(
+    model: QuantModel,
+    layer: Union[QuantModule, BaseQuantBlock],
+    cali_data: torch.Tensor,
+    damping: float = 1.0,
+    act_quant: bool = False,
+    batch_size: int = 32,
+    keep_gpu: bool = True,
+):
     """
     Save gradient data of a particular layer/block over calibration dataset.
 
@@ -58,7 +73,7 @@ def save_grad_data(model: QuantModel, layer: Union[QuantModule, BaseQuantBlock],
     torch.cuda.empty_cache()
 
     for i in range(int(cali_data.size(0) / batch_size)):
-        cur_grad = get_grad(cali_data[i * batch_size:(i + 1) * batch_size])
+        cur_grad = get_grad(cali_data[i * batch_size : (i + 1) * batch_size])
         cached_batches.append(cur_grad.cpu())
 
     cached_grads = torch.cat([x for x in cached_batches])
@@ -75,6 +90,7 @@ class StopForwardException(Exception):
     """
     Used to throw and catch an exception to stop traversing the graph
     """
+
     pass
 
 
@@ -82,6 +98,7 @@ class DataSaverHook:
     """
     Forward hook that stores the input and output of a block
     """
+
     def __init__(self, store_input=False, store_output=False, stop_forward=False):
         self.store_input = store_input
         self.store_output = store_output
@@ -100,14 +117,22 @@ class DataSaverHook:
 
 
 class GetLayerInpOut:
-    def __init__(self, model: QuantModel, layer: Union[QuantModule, BaseQuantBlock],
-                 device: torch.device, asym: bool = False, act_quant: bool = False):
+    def __init__(
+        self,
+        model: QuantModel,
+        layer: Union[QuantModule, BaseQuantBlock],
+        device: torch.device,
+        asym: bool = False,
+        act_quant: bool = False,
+    ):
         self.model = model
         self.layer = layer
         self.asym = asym
         self.device = device
         self.act_quant = act_quant
-        self.data_saver = DataSaverHook(store_input=True, store_output=True, stop_forward=True)
+        self.data_saver = DataSaverHook(
+            store_input=True, store_output=True, stop_forward=True
+        )
 
     def __call__(self, model_input):
         self.model.eval()
@@ -136,7 +161,10 @@ class GetLayerInpOut:
         self.layer.set_quant_state(True, self.act_quant)
         self.model.train()
 
-        return self.data_saver.input_store[0].detach(), self.data_saver.output_store.detach()
+        return (
+            self.data_saver.input_store[0].detach(),
+            self.data_saver.output_store.detach(),
+        )
 
 
 class GradSaverHook:
@@ -153,8 +181,13 @@ class GradSaverHook:
 
 
 class GetLayerGrad:
-    def __init__(self, model: QuantModel, layer: Union[QuantModule, BaseQuantBlock],
-                 device: torch.device, act_quant: bool = False):
+    def __init__(
+        self,
+        model: QuantModel,
+        layer: Union[QuantModule, BaseQuantBlock],
+        device: torch.device,
+        act_quant: bool = False,
+    ):
         self.model = model
         self.layer = layer
         self.device = device
@@ -180,7 +213,11 @@ class GetLayerGrad:
                 out_fp = self.model(inputs)
                 quantize_model_till(self.model, self.layer, self.act_quant)
                 out_q = self.model(inputs)
-                loss = F.kl_div(F.log_softmax(out_q, dim=1), F.softmax(out_fp, dim=1), reduction='batchmean')
+                loss = F.kl_div(
+                    F.log_softmax(out_q, dim=1),
+                    F.softmax(out_fp, dim=1),
+                    reduction="batchmean",
+                )
                 loss.backward()
             except StopForwardException:
                 pass
@@ -192,7 +229,11 @@ class GetLayerGrad:
         return self.data_saver.grad_out.data
 
 
-def quantize_model_till(model: QuantModule, layer: Union[QuantModule, BaseQuantBlock], act_quant: bool = False):
+def quantize_model_till(
+    model: QuantModule,
+    layer: Union[QuantModule, BaseQuantBlock],
+    act_quant: bool = False,
+):
     """
     We assumes modules are correctly ordered, holds for all models considered
     :param model: quantized_model
