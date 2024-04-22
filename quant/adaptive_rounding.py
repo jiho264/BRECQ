@@ -15,7 +15,12 @@ class AdaRoundQuantizer(nn.Module):
     :param weight_tensor: initialize alpha
     """
 
-    def __init__(self, uaq: UniformAffineQuantizer, weight_tensor: torch.Tensor, round_mode='learned_round_sigmoid'):
+    def __init__(
+        self,
+        uaq: UniformAffineQuantizer,
+        weight_tensor: torch.Tensor,
+        round_mode="learned_round_sigmoid",
+    ):
         super(AdaRoundQuantizer, self).__init__()
         # copying all attributes from UniformAffineQuantizer
         self.n_bits = uaq.n_bits
@@ -30,27 +35,27 @@ class AdaRoundQuantizer(nn.Module):
 
         # params for sigmoid function
         self.gamma, self.zeta = -0.1, 1.1
-        self.beta = 2/3
+        self.beta = 2 / 3
         self.init_alpha(x=weight_tensor.clone())
 
     def forward(self, x):
-        if self.round_mode == 'nearest':
+        if self.round_mode == "nearest":
             x_int = torch.round(x / self.delta)
-        elif self.round_mode == 'nearest_ste':
+        elif self.round_mode == "nearest_ste":
             x_int = round_ste(x / self.delta)
-        elif self.round_mode == 'stochastic':
+        elif self.round_mode == "stochastic":
             x_floor = torch.floor(x / self.delta)
             rest = (x / self.delta) - x_floor  # rest of rounding
             x_int = x_floor + torch.bernoulli(rest)
-            print('Draw stochastic sample')
-        elif self.round_mode == 'learned_hard_sigmoid':
+            print("Draw stochastic sample")
+        elif self.round_mode == "learned_hard_sigmoid":
             x_floor = torch.floor(x / self.delta)
             if self.soft_targets:
                 x_int = x_floor + self.get_soft_targets()
             else:
                 x_int = x_floor + (self.alpha >= 0).float()
         else:
-            raise ValueError('Wrong rounding mode')
+            raise ValueError("Wrong rounding mode")
 
         x_quant = torch.clamp(x_int + self.zero_point, 0, self.n_levels - 1)
         x_float_q = (x_quant - self.zero_point) * self.delta
@@ -58,14 +63,18 @@ class AdaRoundQuantizer(nn.Module):
         return x_float_q
 
     def get_soft_targets(self):
-        return torch.clamp(torch.sigmoid(self.alpha) * (self.zeta - self.gamma) + self.gamma, 0, 1)
+        return torch.clamp(
+            torch.sigmoid(self.alpha) * (self.zeta - self.gamma) + self.gamma, 0, 1
+        )
 
     def init_alpha(self, x: torch.Tensor):
         x_floor = torch.floor(x / self.delta)
-        if self.round_mode == 'learned_hard_sigmoid':
-            print('Init alpha to be FP32')
+        if self.round_mode == "learned_hard_sigmoid":
+            print("Init alpha to be FP32")
             rest = (x / self.delta) - x_floor  # rest of rounding [0, 1)
-            alpha = -torch.log((self.zeta - self.gamma) / (rest - self.gamma) - 1)  # => sigmoid(alpha) = rest
+            alpha = -torch.log(
+                (self.zeta - self.gamma) / (rest - self.gamma) - 1
+            )  # => sigmoid(alpha) = rest
             self.alpha = nn.Parameter(alpha)
         else:
             raise NotImplementedError
