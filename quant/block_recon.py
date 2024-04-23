@@ -60,6 +60,10 @@ def block_reconstruction(
                     round_mode=round_mode,
                     weight_tensor=module.org_weight.data,
                 )
+                """[My comment]
+                [main - blockrRec - (1) init AdaRoundQuantizer]
+                If soft_targets == True, It find optimal V whan forward pass. 
+                """
                 module.weight_quantizer.soft_targets = True
 
         # Set up optimizer
@@ -117,9 +121,18 @@ def block_reconstruction(
         cur_grad = cached_grads[idx].to(device) if opt_mode != "mse" else None
 
         optimizer.zero_grad()
+        """[My comment] [main - blockRec - (2) forward]
+        >>> out_quant == x_float_q
+        """
         out_quant = block(cur_inp)
 
+        """[My comment] [main - blockRec - (3) get loss]
+        >>> err == total_loss == rec_loss + round_loss == The loss when [V is argmin_(V)]
+        """
         err = loss_func(out_quant, cur_out, cur_grad)
+
+        """[My comment] [main - layerRec - (4) backward]
+        """
         err.backward(retain_graph=True)
         if multi_gpu:
             for p in opt_params:
@@ -130,6 +143,9 @@ def block_reconstruction(
 
     torch.cuda.empty_cache()
 
+    """[My comment] [main - blockRec - (5) END]
+    If soft_targets == False, It apply hard rounding. 
+    """
     # Finish optimization, use hard rounding.
     for name, module in block.named_modules():
         if isinstance(module, QuantModule):
@@ -182,6 +198,10 @@ class LossFunction:
         """
         self.count += 1
         if self.rec_loss == "mse":
+            """[My comment] [main - blockRec - (3) get loss - (1) get L2 norm loss]
+                L2norm(f(Wx) - f(W_qx))    ...(the part of eq. 25)
+            >>> rec_loss (the SUM about layers in block)
+            """
             rec_loss = lp_loss(pred, tgt, p=self.p)
         elif self.rec_loss == "fisher_diag":
             rec_loss = ((pred - tgt).pow(2) * grad.pow(2)).sum(1).mean()
@@ -200,15 +220,36 @@ class LossFunction:
             b = round_loss = 0
         elif self.round_loss == "relaxation":
             round_loss = 0
+            """[My comment] [main - blockRec - (3) get loss - (2) get h(V_(i,j)]
+            >>> return h(V_(i,j))
+            """
             for name, module in self.block.named_modules():
                 if isinstance(module, QuantModule):
+                    """[My comment] [main - blockRec - (3) get loss - (2) get h(V_(i,j)]
+                    >>> return h(V_(i,j))
+                    """
                     round_vals = module.weight_quantizer.get_soft_targets()
+                    """[My comment] [main - blockRec - (3) get loss - (3) get lambda * f_reg(V]
+                        When warmup iter - do not compute round_loss.
+                        And up, set b to 20 -> 2 and compute round_loss.
+                        b is annealing factor on eq. 24.
+                        
+                        lambda * f_reg(V_(i,j)) = lambda * sum(1 - 2 * abs(h(V_(i,j)) - 0.5)^b)    ...(eq. 24)
+                    >>> return sum(lambda * f_reg(V_(i,j)))
+                    """
                     round_loss += (
                         self.weight * (1 - ((round_vals - 0.5).abs() * 2).pow(b)).sum()
                     )
         else:
             raise NotImplementedError
-
+        """[My comment]
+        [main - blockRec - (3) get loss - (4) get total loss]
+            argmin_(V) [L2norm(f(Wx) - f(W_qx)) + lambda * f_reg(V_(i,j))]    ...(eq. 25)
+        >>> return loss
+        if act_quant,
+        >>> return L2norm(f(Wx) - f(W_qx))
+        (just apply LSQ with Adam optim. no need to optimize V. the loss from V is always 0.)
+        """
         total_loss = rec_loss + round_loss
         if self.count % 500 == 0:
             print(

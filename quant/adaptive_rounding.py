@@ -51,8 +51,10 @@ class AdaRoundQuantizer(nn.Module):
         elif self.round_mode == "learned_hard_sigmoid":
             x_floor = torch.floor(x / self.delta)
             if self.soft_targets:
+                # [My comment] If soft_targets == True, It find optimal V whan forward pass.
                 x_int = x_floor + self.get_soft_targets()
             else:
+                # [My comment] If soft_targets == False, It apply hard rounding.
                 x_int = x_floor + (self.alpha >= 0).float()
         else:
             raise ValueError("Wrong rounding mode")
@@ -63,11 +65,25 @@ class AdaRoundQuantizer(nn.Module):
         return x_float_q
 
     def get_soft_targets(self):
+        """[My comment]
+            h(V_(i,j)) = clip(sigmoid(V_(i,j)) * (zeta - gamma) + gamma), 0, 1)    ...(eq. 23)
+        >>> return h(V_(i,j))
+        """
         return torch.clamp(
             torch.sigmoid(self.alpha) * (self.zeta - self.gamma) + self.gamma, 0, 1
         )
 
     def init_alpha(self, x: torch.Tensor):
+        """[My comment][main - layerRec - (1) init - init alpha]
+        - 우리는 h(V)가 들어있는 loss를 최소화 해야함.
+            w~ = s * clip (floor(w/s)+h(V_(i,j)),0,1)
+        - 현재 산출된 rounding error를 h(V)라고 생각해야함.
+        - 그런데 지금 최적화할 변수 V를 세팅해야함. V는 구해진적 없음.
+        - 그래서 h()의 역함수인 -log(~~)를 취해, V를 구함. >> alpha에 대입.
+
+        >>> alpha == V_(i,j) == learnable parameter
+        >>> rest == h(V_(i,j)) == \delta W (rounding error)
+        """
         x_floor = torch.floor(x / self.delta)
         if self.round_mode == "learned_hard_sigmoid":
             print("Init alpha to be FP32")
