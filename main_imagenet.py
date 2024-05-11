@@ -8,6 +8,7 @@ import time
 import hubconf
 from quant import *
 from data.imagenet import build_imagenet_data
+import inspect, time
 
 
 def seed_all(seed=1029):
@@ -82,6 +83,7 @@ def accuracy(output, target, topk=(1,)):
 
 @torch.no_grad()
 def validate_model(val_loader, model, device=None, print_freq=100):
+    _start_time = time.time()
     if device is None:
         device = next(model.parameters()).device
     else:
@@ -114,7 +116,11 @@ def validate_model(val_loader, model, device=None, print_freq=100):
         if i % print_freq == 0:
             progress.display(i)
 
-    print(" * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}".format(top1=top1, top5=top5))
+    print(
+        " * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}".format(top1=top1, top5=top5),
+        end=" ",
+    )
+    print(f"Validate Time: {time.time() - _start_time:.2f}s")
 
     return top1.avg
 
@@ -129,7 +135,7 @@ def get_train_samples(train_loader, num_samples):
 
 
 if __name__ == "__main__":
-
+    _start_time_main = time.time()
     parser = argparse.ArgumentParser(
         description="running parameters",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -260,10 +266,14 @@ if __name__ == "__main__":
 
     cali_data = get_train_samples(train_loader, num_samples=args.num_samples)
     device = next(qnn.parameters()).device
-
+    print(f"Time for Setup: {time.time() - _start_time_main:.2f}")
+    print("--Qparam----------------------------------------------------------")
     # Initialize weight quantization parameters
+    _start_time_Qparams = time.time()
     qnn.set_quant_state(True, False)
     _ = qnn(cali_data[:64].to(device))
+    _end_time_Qparams = time.time()
+    print(f"Time for Qparam: {_end_time_Qparams - _start_time_Qparams:.2f}")
 
     if args.test_before_calibration:
         print(
@@ -283,6 +293,49 @@ if __name__ == "__main__":
         act_quant=False,
         opt_mode="mse",
     )
+
+    def measure_sensitivity(model: nn.Module):
+        """
+        Print the sensitivity of each layer/block in the model.
+        The sensitivity is L2-distance between the original output and the quantized output.
+
+        Args:
+            model (nn.Module): Quantized Model
+
+        Returns:
+            Dict: Sensitivity of each layer/block
+        """
+        from quant.block_recon import block_sensitivity
+        from quant.layer_recon import layer_sensitivity
+
+        _sensitivisies = dict()
+        for name, module in model.named_children():
+            if isinstance(module, QuantModule):
+                if module.ignore_reconstruction is True:
+                    print("Ignore reconstruction of layer {}".format(name))
+                    continue
+                else:
+                    _err = layer_sensitivity(qnn, module, **kwargs)
+                    print(f"layer {name} | L2-distance {_err:.4f}")
+                    _sensitivisies[name] = _err
+            elif isinstance(module, BaseQuantBlock):
+                if module.ignore_reconstruction is True:
+                    print("Ignore reconstruction of block {}".format(name))
+                    continue
+                else:
+                    _err = block_sensitivity(qnn, module, **kwargs)
+                    print(f"block {name} | L2-distance {_err:.4f}")
+                    _sensitivisies[name] = _err
+            else:
+                measure_sensitivity(module)
+        return _sensitivisies
+
+    _start_time_measure_sensitivity = time.time()
+    sensitivities = measure_sensitivity(qnn)
+    print(
+        f"Time for sensitivity measurement: {time.time() - _start_time_measure_sensitivity:.2f}"
+    )
+    print("--BRECQ----------------------------------------------------------")
 
     def recon_model(model: nn.Module):
         """
@@ -307,8 +360,12 @@ if __name__ == "__main__":
                 recon_model(module)
 
     # Start calibration
+    _start_time_BRECQ = time.time()
     recon_model(qnn)
+    _end_time_BRECQ = time.time()
+    print("Time for BRECQ: {:.2f}".format(_end_time_BRECQ - _start_time_BRECQ))
     qnn.set_quant_state(weight_quant=True, act_quant=False)
+    print("--Validation------------------------------------------------------")
     print("Weight quantization accuracy: {}".format(validate_model(test_loader, qnn)))
 
     if args.act_quant:
@@ -335,3 +392,9 @@ if __name__ == "__main__":
                 args.n_bits_w, args.n_bits_a, validate_model(test_loader, qnn)
             )
         )
+    _end_time_main = time.time()
+    print("----------------------------------------------------------------")
+    print(f"Time for Setup: {_start_time_Qparams - _start_time_main:.2f}")
+    print(f"Time for Qparam: {_end_time_Qparams - _start_time_Qparams:.2f}")
+    print(f"Time for BRECQ: {_end_time_BRECQ - _start_time_BRECQ:.2f}")
+    print(f"Total time: {_end_time_main - _start_time_main:.2f}")

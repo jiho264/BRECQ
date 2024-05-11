@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from quant.quant_layer import QuantModule, Union
 from quant.quant_model import QuantModel
 from quant.quant_block import BaseQuantBlock
+import inspect
 
 
 def save_inp_oup_data(
@@ -43,6 +44,12 @@ def save_inp_oup_data(
     if keep_gpu:
         cached_inps = cached_inps.to(device)
         cached_outs = cached_outs.to(device)
+
+    if inspect.currentframe().f_back.f_code.co_name in [
+        "block_reconstruction",
+        "layer_reconstruction",
+    ]:
+        print(f"Input data: {cached_inps.shape}, Output data: {cached_outs.shape}")
     return cached_inps, cached_outs
 
 

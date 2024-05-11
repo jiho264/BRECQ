@@ -7,6 +7,87 @@ from quant.adaptive_rounding import AdaRoundQuantizer
 from quant.data_utils import save_grad_data, save_inp_oup_data
 
 
+def layer_sensitivity(
+    model: QuantModel,
+    layer: QuantModule,
+    cali_data: torch.Tensor,
+    batch_size: int = 32,
+    iters: int = 20000,
+    weight: float = 0.001,
+    opt_mode: str = "mse",
+    asym: bool = False,
+    include_act_func: bool = True,
+    b_range: tuple = (20, 2),
+    warmup: float = 0.0,
+    act_quant: bool = False,
+    lr: float = 4e-5,
+    p: float = 2.0,
+    multi_gpu: bool = False,
+):
+    """
+    Block reconstruction to optimize the output from each layer.
+
+    :param model: QuantModel
+    :param layer: QuantModule that needs to be optimized
+    :param cali_data: data for calibration, typically 1024 training images, as described in AdaRound
+    :param batch_size: mini-batch size for reconstruction
+    :param iters: optimization iterations for reconstruction,
+    :param weight: the weight of rounding regularization term
+    :param opt_mode: optimization mode
+    :param asym: asymmetric optimization designed in AdaRound, use quant input to reconstruct fp output
+    :param include_act_func: optimize the output after activation function
+    :param b_range: temperature range
+    :param warmup: proportion of iterations that no scheduling for temperature
+    :param act_quant: use activation quantization or not.
+    :param lr: learning rate for act delta learning
+    :param p: L_p norm minimization
+    :param multi_gpu: use multi-GPU or not, if enabled, we should sync the gradients
+    """
+
+    model.set_quant_state(False, False)
+    layer.set_quant_state(True, act_quant)
+
+    loss_mode = "none" if act_quant else "relaxation"
+    rec_loss = opt_mode
+
+    loss_func = LossFunction(
+        layer,
+        round_loss=loss_mode,
+        weight=weight,
+        max_count=iters,
+        rec_loss=rec_loss,
+        b_range=b_range,
+        decay_start=0,
+        warmup=warmup,
+        p=p,
+    )
+
+    # Save data before optimizing the rounding
+    cached_inps, cached_outs = save_inp_oup_data(
+        model, layer, cali_data, asym, act_quant, batch_size
+    )
+    if opt_mode != "mse":
+        cached_grads = save_grad_data(
+            model, layer, cali_data, act_quant, batch_size=batch_size
+        )
+    else:
+        cached_grads = None
+    device = "cuda"
+
+    idx = torch.randperm(cached_inps.size(0))[:batch_size]
+    cur_inp = cached_inps[idx]
+    cur_out = cached_outs[idx]
+    cur_grad = cached_grads[idx] if opt_mode != "mse" else None
+
+    out_quant = layer(cur_inp)
+
+    err = loss_func(out_quant, cur_out, cur_grad)
+
+    torch.cuda.empty_cache()
+
+    return err
+
+
 def layer_reconstruction(
     model: QuantModel,
     layer: QuantModule,

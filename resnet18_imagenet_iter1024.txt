@@ -1,0 +1,113 @@
+You are using fake SyncBatchNorm2d who is actually the official BatchNorm2d
+==> Using Pytorch Dataset
+Setting the first and the last layer to 8-bit
+Time for Setup: 4.00
+--Qparam----------------------------------------------------------
+init_quantization_scale execution time: 0.80 s
+init_quantization_scale execution time: 0.77 s
+init_quantization_scale execution time: 0.78 s
+init_quantization_scale execution time: 0.78 s
+init_quantization_scale execution time: 0.78 s
+init_quantization_scale execution time: 1.48 s
+init_quantization_scale execution time: 1.55 s
+init_quantization_scale execution time: 1.56 s
+init_quantization_scale execution time: 1.57 s
+init_quantization_scale execution time: 1.57 s
+init_quantization_scale execution time: 3.00 s
+init_quantization_scale execution time: 3.13 s
+init_quantization_scale execution time: 3.20 s
+init_quantization_scale execution time: 3.19 s
+init_quantization_scale execution time: 3.19 s
+init_quantization_scale execution time: 6.09 s
+init_quantization_scale execution time: 6.32 s
+init_quantization_scale execution time: 6.46 s
+init_quantization_scale execution time: 6.42 s
+init_quantization_scale execution time: 6.36 s
+init_quantization_scale execution time: 11.56 s
+Time for Qparam: 70.71
+Ignore reconstruction of layer conv1
+block 0 | L2-distance 0.4014
+block 1 | L2-distance 0.9989
+block 0 | L2-distance 0.7623
+block 1 | L2-distance 1.2071
+block 0 | L2-distance 1.3101
+block 1 | L2-distance 1.6707
+block 0 | L2-distance 3.3304
+block 1 | L2-distance 584.4244
+layer fc | L2-distance 879.0045
+Time for sensitivity measurement: 7.32
+--BRECQ----------------------------------------------------------
+Ignore reconstruction of layer conv1
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
+Total loss:	478.183 (rec:0.005, round:478.178)	b=13.51	count=500
+Total loss:	175.138 (rec:0.016, round:175.121)	b=2.53	count=1000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
+Total loss:	506.780 (rec:0.088, round:506.692)	b=13.51	count=500
+Total loss:	200.444 (rec:0.105, round:200.339)	b=2.53	count=1000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 128, 28, 28])
+Total loss:	1543.034 (rec:0.064, round:1542.970)	b=13.51	count=500
+Total loss:	528.966 (rec:0.084, round:528.882)	b=2.53	count=1000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 128, 28, 28])
+Total loss:	1987.568 (rec:0.155, round:1987.413)	b=13.51	count=500
+Total loss:	667.827 (rec:0.157, round:667.670)	b=2.53	count=1000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 256, 14, 14])
+Total loss:	6145.381 (rec:0.111, round:6145.271)	b=13.51	count=500
+Total loss:	1956.019 (rec:0.112, round:1955.908)	b=2.53	count=1000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 256, 14, 14])
+Total loss:	7903.938 (rec:0.176, round:7903.762)	b=13.51	count=500
+Total loss:	2521.749 (rec:0.178, round:2521.571)	b=2.53	count=1000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 512, 7, 7])
+Total loss:	24619.705 (rec:0.273, round:24619.432)	b=13.51	count=500
+Total loss:	8024.396 (rec:0.305, round:8024.090)	b=2.53	count=1000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 512, 7, 7]), Output data: torch.Size([1024, 512, 7, 7])
+Total loss:	34368.742 (rec:40.725, round:34328.016)	b=13.51	count=500
+Total loss:	18196.648 (rec:34.723, round:18161.926)	b=2.53	count=1000
+Reconstruction for layer fc
+Init alpha to be FP32
+Input data: torch.Size([1024, 512]), Output data: torch.Size([1024, 1000])
+Total loss:	3666.073 (rec:37.507, round:3628.567)	b=13.51	count=500
+Total loss:	1781.475 (rec:45.396, round:1736.079)	b=2.53	count=1000
+Time for BRECQ: 35.93
+--Validation------------------------------------------------------
+Test: [  0/782]	Time  0.724 ( 0.724)	Acc@1  87.50 ( 87.50)	Acc@5  96.88 ( 96.88)
+Test: [100/782]	Time  0.020 ( 0.061)	Acc@1  81.25 ( 77.27)	Acc@5  98.44 ( 92.74)
+Test: [200/782]	Time  0.034 ( 0.057)	Acc@1  82.81 ( 77.28)	Acc@5  93.75 ( 93.91)
+Test: [300/782]	Time  0.039 ( 0.057)	Acc@1  75.00 ( 77.36)	Acc@5  98.44 ( 93.91)
+Test: [400/782]	Time  0.018 ( 0.056)	Acc@1  68.75 ( 74.42)	Acc@5  92.19 ( 92.14)
+Test: [500/782]	Time  0.017 ( 0.056)	Acc@1  81.25 ( 72.81)	Acc@5  93.75 ( 90.95)
+Test: [600/782]	Time  0.034 ( 0.055)	Acc@1  73.44 ( 71.57)	Acc@5  89.06 ( 90.17)
+Test: [700/782]	Time  0.031 ( 0.055)	Acc@1  65.62 ( 70.50)	Acc@5  92.19 ( 89.51)
+ * Acc@1 70.430 Acc@5 89.554 Validate Time: 43.07s
+Weight quantization accuracy: 70.43000030517578
+----------------------------------------------------------------
+Time for Setup: 4.00
+Time for Qparam: 70.71
+Time for BRECQ: 35.93
+Total time: 161.03
