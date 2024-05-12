@@ -1,41 +1,41 @@
 You are using fake SyncBatchNorm2d who is actually the official BatchNorm2d
 ==> Using Pytorch Dataset
 Setting the first and the last layer to 8-bit
-Time for Setup: 4.00
+Time for Setup: 3.85
 --Qparam----------------------------------------------------------
-init_quantization_scale execution time: 0.80 s
-init_quantization_scale execution time: 0.77 s
-init_quantization_scale execution time: 0.78 s
-init_quantization_scale execution time: 0.78 s
-init_quantization_scale execution time: 0.78 s
-init_quantization_scale execution time: 1.48 s
-init_quantization_scale execution time: 1.55 s
-init_quantization_scale execution time: 1.56 s
-init_quantization_scale execution time: 1.57 s
-init_quantization_scale execution time: 1.57 s
-init_quantization_scale execution time: 3.00 s
-init_quantization_scale execution time: 3.13 s
-init_quantization_scale execution time: 3.20 s
-init_quantization_scale execution time: 3.19 s
-init_quantization_scale execution time: 3.19 s
-init_quantization_scale execution time: 6.09 s
-init_quantization_scale execution time: 6.32 s
-init_quantization_scale execution time: 6.46 s
-init_quantization_scale execution time: 6.42 s
-init_quantization_scale execution time: 6.36 s
-init_quantization_scale execution time: 11.56 s
-Time for Qparam: 70.71
+Qparam | [W - W_q] L2.4 norm: 0.00000004, (0.80s)
+Qparam | [W - W_q] L2.4 norm: 0.00063020, (0.78s)
+Qparam | [W - W_q] L2.4 norm: 0.00229894, (0.79s)
+Qparam | [W - W_q] L2.4 norm: 0.00017027, (0.78s)
+Qparam | [W - W_q] L2.4 norm: 0.00286170, (0.80s)
+Qparam | [W - W_q] L2.4 norm: 0.00082689, (1.53s)
+Qparam | [W - W_q] L2.4 norm: 0.00013717, (1.59s)
+Qparam | [W - W_q] L2.4 norm: 0.00143421, (1.63s)
+Qparam | [W - W_q] L2.4 norm: 0.00055806, (1.63s)
+Qparam | [W - W_q] L2.4 norm: 0.00197131, (1.57s)
+Qparam | [W - W_q] L2.4 norm: 0.00036760, (3.02s)
+Qparam | [W - W_q] L2.4 norm: 0.00032447, (3.17s)
+Qparam | [W - W_q] L2.4 norm: 0.00128922, (3.23s)
+Qparam | [W - W_q] L2.4 norm: 0.00045704, (3.22s)
+Qparam | [W - W_q] L2.4 norm: 0.00253534, (3.21s)
+Qparam | [W - W_q] L2.4 norm: 0.00326537, (6.15s)
+Qparam | [W - W_q] L2.4 norm: 0.00030576, (6.42s)
+Qparam | [W - W_q] L2.4 norm: 0.00611855, (6.58s)
+Qparam | [W - W_q] L2.4 norm: 0.00029359, (6.47s)
+Qparam | [W - W_q] L2.4 norm: 0.34683239, (6.41s)
+Qparam | [W - W_q] L2.4 norm: 0.00001788, (11.53s)
+Time for Qparam: 71.47
 Ignore reconstruction of layer conv1
-block 0 | L2-distance 0.4014
-block 1 | L2-distance 0.9989
-block 0 | L2-distance 0.7623
-block 1 | L2-distance 1.2071
-block 0 | L2-distance 1.3101
-block 1 | L2-distance 1.6707
-block 0 | L2-distance 3.3304
-block 1 | L2-distance 584.4244
-layer fc | L2-distance 879.0045
-Time for sensitivity measurement: 7.32
+block 0 | [Wx - (W^~)x^] L2 norm:  0.4014
+block 1 | [Wx - (W^~)x^] L2 norm:  0.9989
+block 0 | [Wx - (W^~)x^] L2 norm:  0.7623
+block 1 | [Wx - (W^~)x^] L2 norm:  1.2071
+block 0 | [Wx - (W^~)x^] L2 norm:  1.3101
+block 1 | [Wx - (W^~)x^] L2 norm:  1.6707
+block 0 | [Wx - (W^~)x^] L2 norm:  3.3304
+block 1 | [Wx - (W^~)x^] L2 norm:  584.4244
+layer fc | [Wx - (W^~)x^] L2 norm: 879.0045
+Time for sensitivity measurement: 7.31
 --BRECQ----------------------------------------------------------
 Ignore reconstruction of layer conv1
 Reconstruction for block 0
@@ -94,20 +94,20 @@ Init alpha to be FP32
 Input data: torch.Size([1024, 512]), Output data: torch.Size([1024, 1000])
 Total loss:	3666.073 (rec:37.507, round:3628.567)	b=13.51	count=500
 Total loss:	1781.475 (rec:45.396, round:1736.079)	b=2.53	count=1000
-Time for BRECQ: 35.93
+Time for BRECQ: 35.60
 --Validation------------------------------------------------------
-Test: [  0/782]	Time  0.724 ( 0.724)	Acc@1  87.50 ( 87.50)	Acc@5  96.88 ( 96.88)
-Test: [100/782]	Time  0.020 ( 0.061)	Acc@1  81.25 ( 77.27)	Acc@5  98.44 ( 92.74)
-Test: [200/782]	Time  0.034 ( 0.057)	Acc@1  82.81 ( 77.28)	Acc@5  93.75 ( 93.91)
-Test: [300/782]	Time  0.039 ( 0.057)	Acc@1  75.00 ( 77.36)	Acc@5  98.44 ( 93.91)
-Test: [400/782]	Time  0.018 ( 0.056)	Acc@1  68.75 ( 74.42)	Acc@5  92.19 ( 92.14)
-Test: [500/782]	Time  0.017 ( 0.056)	Acc@1  81.25 ( 72.81)	Acc@5  93.75 ( 90.95)
-Test: [600/782]	Time  0.034 ( 0.055)	Acc@1  73.44 ( 71.57)	Acc@5  89.06 ( 90.17)
-Test: [700/782]	Time  0.031 ( 0.055)	Acc@1  65.62 ( 70.50)	Acc@5  92.19 ( 89.51)
- * Acc@1 70.430 Acc@5 89.554 Validate Time: 43.07s
+Test: [  0/782]	Time  0.679 ( 0.679)	Acc@1  87.50 ( 87.50)	Acc@5  96.88 ( 96.88)
+Test: [100/782]	Time  0.034 ( 0.062)	Acc@1  81.25 ( 77.27)	Acc@5  98.44 ( 92.74)
+Test: [200/782]	Time  0.300 ( 0.058)	Acc@1  82.81 ( 77.28)	Acc@5  93.75 ( 93.91)
+Test: [300/782]	Time  0.028 ( 0.057)	Acc@1  75.00 ( 77.36)	Acc@5  98.44 ( 93.91)
+Test: [400/782]	Time  0.019 ( 0.056)	Acc@1  68.75 ( 74.42)	Acc@5  92.19 ( 92.14)
+Test: [500/782]	Time  0.023 ( 0.056)	Acc@1  81.25 ( 72.81)	Acc@5  93.75 ( 90.95)
+Test: [600/782]	Time  0.033 ( 0.056)	Acc@1  73.44 ( 71.57)	Acc@5  89.06 ( 90.17)
+Test: [700/782]	Time  0.034 ( 0.055)	Acc@1  65.62 ( 70.50)	Acc@5  92.19 ( 89.51)
+ * Acc@1 70.430 Acc@5 89.554 Validate Time: 43.40s
 Weight quantization accuracy: 70.43000030517578
 ----------------------------------------------------------------
-Time for Setup: 4.00
-Time for Qparam: 70.71
-Time for BRECQ: 35.93
-Total time: 161.03
+Time for Setup: 3.85
+Time for Qparam: 71.47
+Time for BRECQ: 35.60
+Total time: 161.62

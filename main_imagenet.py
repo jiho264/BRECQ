@@ -316,7 +316,7 @@ if __name__ == "__main__":
                     continue
                 else:
                     _err = layer_sensitivity(qnn, module, **kwargs)
-                    print(f"layer {name} | L2-distance {_err:.4f}")
+                    print(f"layer {name} | [Wx - (W^~)x^] L2 norm: {_err:.4f}")
                     _sensitivisies[name] = _err
             elif isinstance(module, BaseQuantBlock):
                 if module.ignore_reconstruction is True:
@@ -324,7 +324,7 @@ if __name__ == "__main__":
                     continue
                 else:
                     _err = block_sensitivity(qnn, module, **kwargs)
-                    print(f"block {name} | L2-distance {_err:.4f}")
+                    print(f"block {name} | [Wx - (W^~)x^] L2 norm:  {_err:.4f}")
                     _sensitivisies[name] = _err
             else:
                 measure_sensitivity(module)
@@ -363,7 +363,7 @@ if __name__ == "__main__":
     _start_time_BRECQ = time.time()
     recon_model(qnn)
     _end_time_BRECQ = time.time()
-    print("Time for BRECQ: {:.2f}".format(_end_time_BRECQ - _start_time_BRECQ))
+    print(f"Time for BRECQ: {_end_time_BRECQ - _start_time_BRECQ:.2f}")
     qnn.set_quant_state(weight_quant=True, act_quant=False)
     print("--Validation------------------------------------------------------")
     print("Weight quantization accuracy: {}".format(validate_model(test_loader, qnn)))

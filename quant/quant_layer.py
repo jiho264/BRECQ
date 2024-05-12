@@ -64,9 +64,12 @@ class UniformAffineQuantizer(nn.Module):
         self.channel_wise = channel_wise
         self.scale_method = scale_method
 
+        self._lp_loss = 0
+
     def forward(self, x: torch.Tensor):
 
         if self.inited is False:
+            _start = time.time()
             if self.leaf_param:
                 delta, self.zero_point = self.init_quantization_scale(
                     x, self.channel_wise
@@ -77,6 +80,9 @@ class UniformAffineQuantizer(nn.Module):
                 self.delta, self.zero_point = self.init_quantization_scale(
                     x, self.channel_wise
                 )
+            print(
+                f"Qparam | [W - W_q] L2.4 norm: {self._lp_loss:.8f}, ({time.time() - _start:.2f}s)"
+            )
             self.inited = True
 
         # start quantization
@@ -85,20 +91,6 @@ class UniformAffineQuantizer(nn.Module):
         x_dequant = (x_quant - self.zero_point) * self.delta
         return x_dequant
 
-    def timerComputeQparams(func):
-        def wrapper(*args, **kwargs):
-            if inspect.currentframe().f_back.f_code.co_name == "forward":
-                _start_time = time.time()
-            result = func(*args, **kwargs)
-            if inspect.currentframe().f_back.f_code.co_name == "forward":
-                print(
-                    f"{func.__name__} execution time: {time.time() - _start_time:.2f} s"
-                )
-            return result
-
-        return wrapper
-
-    @timerComputeQparams
     def init_quantization_scale(self, x: torch.Tensor, channel_wise: bool = False):
         delta, zero_point = None, None
         if channel_wise:
@@ -160,6 +152,7 @@ class UniformAffineQuantizer(nn.Module):
                         best_score = score
                         delta = (new_max - new_min) / (2**self.n_bits - 1)
                         zero_point = (-new_min / delta).round()
+                self._lp_loss += best_score
             else:
                 raise NotImplementedError
 
