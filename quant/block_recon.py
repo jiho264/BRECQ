@@ -5,6 +5,7 @@ from quant.quant_model import QuantModel
 from quant.quant_block import BaseQuantBlock
 from quant.adaptive_rounding import AdaRoundQuantizer
 from quant.data_utils import save_grad_data, save_inp_oup_data
+import inspect
 
 
 def block_sensitivity(
@@ -154,7 +155,7 @@ def block_reconstruction(
         optimizer = torch.optim.Adam(opt_params)
         scheduler = None
         # scheduler = torch.optim.lr_scheduler.MultiStepLR(
-        #     optimizer=optimizer, milestones=[iters / 3, iters * 2 / 3], gamma=0.1
+        #     optimizer=optimizer, milestones=[int(iters / 3), int(iters * 2 / 3)], gamma=0.1
         # )
     else:
         # Use UniformAffineQuantizer to learn delta
@@ -175,10 +176,11 @@ def block_reconstruction(
     #     print(
     #         f"- [Optimizer - {optimizer.__class__.__name__}] lr: {optimizer.param_groups[0]["initial_lr"]}"
     #     )
-    # if scheduler.__class__.__name__ == "MultiStepLR":
-    #     print(
-    #         f"- [Scheduler - {scheduler.__class__.__name__}] milestones: {[int(x) for x in scheduler.milestones]}, gamma: {scheduler.gamma}"
-    #     )
+    # if scheduler:
+    #     if scheduler.__class__.__name__ == "MultiStepLR":
+    #         print(
+    #             f"- [Scheduler - {scheduler.__class__.__name__}] milestones: {[int(x) for x in scheduler.milestones]}, gamma: {scheduler.gamma}"
+    #         )
 
     loss_mode = "none" if act_quant else "relaxation"
     rec_loss = opt_mode
