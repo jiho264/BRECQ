@@ -1,52 +1,57 @@
 You are using fake SyncBatchNorm2d who is actually the official BatchNorm2d
 ==> Using Pytorch Dataset
 Setting the first and the last layer to 8-bit
-init_quantization_scale execution time: 0.81 s
-init_quantization_scale execution time: 0.78 s
-init_quantization_scale execution time: 0.79 s
-init_quantization_scale execution time: 0.79 s
-init_quantization_scale execution time: 0.79 s
-init_quantization_scale execution time: 1.51 s
-init_quantization_scale execution time: 1.58 s
-init_quantization_scale execution time: 1.60 s
-init_quantization_scale execution time: 1.61 s
-init_quantization_scale execution time: 1.60 s
-init_quantization_scale execution time: 3.05 s
-init_quantization_scale execution time: 3.19 s
-init_quantization_scale execution time: 3.26 s
-init_quantization_scale execution time: 3.24 s
-init_quantization_scale execution time: 3.24 s
-init_quantization_scale execution time: 6.19 s
-init_quantization_scale execution time: 6.42 s
-init_quantization_scale execution time: 6.60 s
-init_quantization_scale execution time: 6.52 s
-init_quantization_scale execution time: 6.47 s
-init_quantization_scale execution time: 11.75 s
-Test: [  0/782]	Time  0.712 ( 0.712)	Acc@1  79.69 ( 79.69)	Acc@5  90.62 ( 90.62)
-Test: [100/782]	Time  0.032 ( 0.061)	Acc@1  82.81 ( 58.14)	Acc@5  96.88 ( 80.79)
-Test: [200/782]	Time  0.034 ( 0.058)	Acc@1  54.69 ( 60.08)	Acc@5  82.81 ( 83.93)
-Test: [300/782]	Time  0.017 ( 0.057)	Acc@1  67.19 ( 60.66)	Acc@5  90.62 ( 84.17)
+Time for Setup: 4.07
+--Qparam----------------------------------------------------------
+Qparam | [W - W_q] L2.4 norm: 0.00000004, (0.78s)
+Qparam | [W - W_q] L2.4 norm: 0.00063020, (0.76s)
+Qparam | [W - W_q] L2.4 norm: 0.00229894, (0.76s)
+Qparam | [W - W_q] L2.4 norm: 0.00017027, (0.76s)
+Qparam | [W - W_q] L2.4 norm: 0.00286170, (0.75s)
+Qparam | [W - W_q] L2.4 norm: 0.00082689, (1.45s)
+Qparam | [W - W_q] L2.4 norm: 0.00013717, (1.52s)
+Qparam | [W - W_q] L2.4 norm: 0.00143421, (1.53s)
+Qparam | [W - W_q] L2.4 norm: 0.00055806, (1.54s)
+Qparam | [W - W_q] L2.4 norm: 0.00197131, (1.53s)
+Qparam | [W - W_q] L2.4 norm: 0.00036760, (2.94s)
+Qparam | [W - W_q] L2.4 norm: 0.00032447, (3.05s)
+Qparam | [W - W_q] L2.4 norm: 0.00128922, (3.11s)
+Qparam | [W - W_q] L2.4 norm: 0.00045704, (3.08s)
+Qparam | [W - W_q] L2.4 norm: 0.00253534, (3.11s)
+Qparam | [W - W_q] L2.4 norm: 0.00326537, (5.95s)
+Qparam | [W - W_q] L2.4 norm: 0.00030576, (6.15s)
+Qparam | [W - W_q] L2.4 norm: 0.00611855, (6.31s)
+Qparam | [W - W_q] L2.4 norm: 0.00029359, (6.27s)
+Qparam | [W - W_q] L2.4 norm: 0.34683239, (6.23s)
+Qparam | [W - W_q] L2.4 norm: 0.00001788, (11.19s)
+Time for Qparam: 68.91
+Test: [  0/782]	Time  0.672 ( 0.672)	Acc@1  79.69 ( 79.69)	Acc@5  90.62 ( 90.62)
+Test: [100/782]	Time  0.017 ( 0.061)	Acc@1  82.81 ( 58.14)	Acc@5  96.88 ( 80.79)
+Test: [200/782]	Time  0.034 ( 0.057)	Acc@1  54.69 ( 60.08)	Acc@5  82.81 ( 83.93)
+Test: [300/782]	Time  0.238 ( 0.057)	Acc@1  67.19 ( 60.66)	Acc@5  90.62 ( 84.17)
 Test: [400/782]	Time  0.018 ( 0.056)	Acc@1  43.75 ( 57.89)	Acc@5  65.62 ( 81.85)
-Test: [500/782]	Time  0.016 ( 0.056)	Acc@1  42.19 ( 56.65)	Acc@5  65.62 ( 80.33)
-Test: [600/782]	Time  0.016 ( 0.056)	Acc@1  62.50 ( 55.63)	Acc@5  82.81 ( 79.34)
-Test: [700/782]	Time  0.031 ( 0.056)	Acc@1  37.50 ( 54.72)	Acc@5  70.31 ( 78.52)
- * Acc@1 54.104 Acc@5 77.884 Validate Time: 43.14s
+Test: [500/782]	Time  0.017 ( 0.056)	Acc@1  42.19 ( 56.65)	Acc@5  65.62 ( 80.33)
+Test: [600/782]	Time  0.120 ( 0.056)	Acc@1  62.50 ( 55.63)	Acc@5  82.81 ( 79.34)
+Test: [700/782]	Time  0.019 ( 0.055)	Acc@1  37.50 ( 54.72)	Acc@5  70.31 ( 78.52)
+ * Acc@1 54.104 Acc@5 77.884 Validate Time: 43.17s
 Quantized accuracy before brecq: 54.104000091552734
 Ignore reconstruction of layer conv1
-block 0 | L2-distance 0.3796
-block 1 | L2-distance 1.0246
-block 0 | L2-distance 0.7656
-block 1 | L2-distance 1.2097
-block 0 | L2-distance 1.2165
-block 1 | L2-distance 1.6530
-block 0 | L2-distance 3.0414
-block 1 | L2-distance 582.7122
-layer fc | L2-distance 835.8015
------------------------------------------------------------------
+block 0 | [Wx - (W^~)x^] L2 norm:  0.3796
+block 1 | [Wx - (W^~)x^] L2 norm:  1.0246
+block 0 | [Wx - (W^~)x^] L2 norm:  0.7656
+block 1 | [Wx - (W^~)x^] L2 norm:  1.2097
+block 0 | [Wx - (W^~)x^] L2 norm:  1.2165
+block 1 | [Wx - (W^~)x^] L2 norm:  1.6530
+block 0 | [Wx - (W^~)x^] L2 norm:  3.0414
+block 1 | [Wx - (W^~)x^] L2 norm:  582.7122
+layer fc | [Wx - (W^~)x^] L2 norm: 835.8015
+Time for sensitivity measurement: 7.29
+--BRECQ----------------------------------------------------------
 Ignore reconstruction of layer conv1
 Reconstruction for block 0
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
 Total loss:	0.003 (rec:0.003, round:0.000)	b=0.00	count=500
 Total loss:	0.002 (rec:0.002, round:0.000)	b=0.00	count=1000
 Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=1500
@@ -90,6 +95,7 @@ Total loss:	0.017 (rec:0.017, round:0.000)	b=2.00	count=20000
 Reconstruction for block 1
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
 Total loss:	0.033 (rec:0.033, round:0.000)	b=0.00	count=500
 Total loss:	0.027 (rec:0.027, round:0.000)	b=0.00	count=1000
 Total loss:	0.024 (rec:0.024, round:0.000)	b=0.00	count=1500
@@ -134,6 +140,7 @@ Reconstruction for block 0
 Init alpha to be FP32
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 128, 28, 28])
 Total loss:	0.021 (rec:0.021, round:0.000)	b=0.00	count=500
 Total loss:	0.018 (rec:0.018, round:0.000)	b=0.00	count=1000
 Total loss:	0.020 (rec:0.020, round:0.000)	b=0.00	count=1500
@@ -177,6 +184,7 @@ Total loss:	0.045 (rec:0.045, round:0.000)	b=2.00	count=20000
 Reconstruction for block 1
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 128, 28, 28])
 Total loss:	0.064 (rec:0.064, round:0.000)	b=0.00	count=500
 Total loss:	0.062 (rec:0.062, round:0.000)	b=0.00	count=1000
 Total loss:	0.056 (rec:0.056, round:0.000)	b=0.00	count=1500
@@ -221,6 +229,7 @@ Reconstruction for block 0
 Init alpha to be FP32
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 256, 14, 14])
 Total loss:	0.044 (rec:0.044, round:0.000)	b=0.00	count=500
 Total loss:	0.042 (rec:0.042, round:0.000)	b=0.00	count=1000
 Total loss:	0.039 (rec:0.039, round:0.000)	b=0.00	count=1500
@@ -264,6 +273,7 @@ Total loss:	0.064 (rec:0.064, round:0.000)	b=2.00	count=20000
 Reconstruction for block 1
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 256, 14, 14])
 Total loss:	0.071 (rec:0.071, round:0.000)	b=0.00	count=500
 Total loss:	0.061 (rec:0.061, round:0.000)	b=0.00	count=1000
 Total loss:	0.065 (rec:0.065, round:0.000)	b=0.00	count=1500
@@ -308,6 +318,7 @@ Reconstruction for block 0
 Init alpha to be FP32
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 512, 7, 7])
 Total loss:	0.092 (rec:0.092, round:0.000)	b=0.00	count=500
 Total loss:	0.083 (rec:0.083, round:0.000)	b=0.00	count=1000
 Total loss:	0.081 (rec:0.081, round:0.000)	b=0.00	count=1500
@@ -351,6 +362,7 @@ Total loss:	0.079 (rec:0.079, round:0.000)	b=2.00	count=20000
 Reconstruction for block 1
 Init alpha to be FP32
 Init alpha to be FP32
+Input data: torch.Size([1024, 512, 7, 7]), Output data: torch.Size([1024, 512, 7, 7])
 Total loss:	8.527 (rec:8.527, round:0.000)	b=0.00	count=500
 Total loss:	6.863 (rec:6.863, round:0.000)	b=0.00	count=1000
 Total loss:	6.772 (rec:6.772, round:0.000)	b=0.00	count=1500
@@ -393,6 +405,7 @@ Total loss:	39.973 (rec:6.189, round:33.784)	b=2.56	count=19500
 Total loss:	12.733 (rec:7.131, round:5.602)	b=2.00	count=20000
 Reconstruction for layer fc
 Init alpha to be FP32
+Input data: torch.Size([1024, 512]), Output data: torch.Size([1024, 1000])
 Total loss:	1.989 (rec:1.989, round:0.000)	b=0.00	count=500
 Total loss:	2.193 (rec:2.193, round:0.000)	b=0.00	count=1000
 Total loss:	2.064 (rec:2.064, round:0.000)	b=0.00	count=1500
@@ -433,18 +446,20 @@ Total loss:	49.481 (rec:1.681, round:47.800)	b=3.69	count=18500
 Total loss:	12.017 (rec:1.726, round:10.291)	b=3.12	count=19000
 Total loss:	2.437 (rec:1.604, round:0.833)	b=2.56	count=19500
 Total loss:	1.653 (rec:1.637, round:0.016)	b=2.00	count=20000
------------------------------------------------------------------
-Test: [  0/782]	Time  0.686 ( 0.686)	Acc@1  85.94 ( 85.94)	Acc@5  96.88 ( 96.88)
-Test: [100/782]	Time  0.021 ( 0.061)	Acc@1  85.94 ( 77.69)	Acc@5  98.44 ( 92.87)
-Test: [200/782]	Time  0.020 ( 0.057)	Acc@1  82.81 ( 77.67)	Acc@5  93.75 ( 93.89)
-Test: [300/782]	Time  0.009 ( 0.058)	Acc@1  75.00 ( 77.62)	Acc@5  98.44 ( 93.95)
-Test: [400/782]	Time  0.010 ( 0.056)	Acc@1  67.19 ( 74.65)	Acc@5  96.88 ( 92.27)
-Test: [500/782]	Time  0.031 ( 0.056)	Acc@1  81.25 ( 73.14)	Acc@5  93.75 ( 91.09)
-Test: [600/782]	Time  0.021 ( 0.056)	Acc@1  78.12 ( 71.86)	Acc@5  90.62 ( 90.33)
-Test: [700/782]	Time  0.017 ( 0.055)	Acc@1  67.19 ( 70.82)	Acc@5  90.62 ( 89.67)
- * Acc@1 70.750 Acc@5 89.700 Validate Time: 42.95s
+Time for BRECQ: 581.65
+--Validation------------------------------------------------------
+Test: [  0/782]	Time  0.635 ( 0.635)	Acc@1  85.94 ( 85.94)	Acc@5  96.88 ( 96.88)
+Test: [100/782]	Time  0.106 ( 0.062)	Acc@1  85.94 ( 77.69)	Acc@5  98.44 ( 92.87)
+Test: [200/782]	Time  0.239 ( 0.058)	Acc@1  82.81 ( 77.67)	Acc@5  93.75 ( 93.89)
+Test: [300/782]	Time  0.036 ( 0.058)	Acc@1  75.00 ( 77.62)	Acc@5  98.44 ( 93.95)
+Test: [400/782]	Time  0.018 ( 0.056)	Acc@1  67.19 ( 74.65)	Acc@5  96.88 ( 92.27)
+Test: [500/782]	Time  0.024 ( 0.056)	Acc@1  81.25 ( 73.14)	Acc@5  93.75 ( 91.09)
+Test: [600/782]	Time  0.115 ( 0.056)	Acc@1  78.12 ( 71.86)	Acc@5  90.62 ( 90.33)
+Test: [700/782]	Time  0.018 ( 0.056)	Acc@1  67.19 ( 70.82)	Acc@5  90.62 ( 89.67)
+ * Acc@1 70.750 Acc@5 89.700 Validate Time: 43.51s
 Weight quantization accuracy: 70.75
-Time for setup: 3.89
-Time for Qparam: 71.94
-Time for BRECQ: 582.44
-Total time: 751.67
+----------------------------------------------------------------
+Time for Setup: 4.07
+Time for Qparam: 68.91
+Time for BRECQ: 581.65
+Total time: 748.60

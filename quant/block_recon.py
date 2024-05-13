@@ -153,6 +153,9 @@ def block_reconstruction(
                 opt_params += [module.weight_quantizer.alpha]
         optimizer = torch.optim.Adam(opt_params)
         scheduler = None
+        # scheduler = torch.optim.lr_scheduler.MultiStepLR(
+        #     optimizer=optimizer, milestones=[iters / 3, iters * 2 / 3], gamma=0.1
+        # )
     else:
         # Use UniformAffineQuantizer to learn delta
         if hasattr(block.act_quantizer, "delta"):
@@ -167,6 +170,15 @@ def block_reconstruction(
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             optimizer, T_max=iters, eta_min=0.0
         )
+    # caller_module = inspect.getmodule(inspect.currentframe().f_back)
+    # if caller_module.__name__ == "__main__":
+    #     print(
+    #         f"- [Optimizer - {optimizer.__class__.__name__}] lr: {optimizer.param_groups[0]["initial_lr"]}"
+    #     )
+    # if scheduler.__class__.__name__ == "MultiStepLR":
+    #     print(
+    #         f"- [Scheduler - {scheduler.__class__.__name__}] milestones: {[int(x) for x in scheduler.milestones]}, gamma: {scheduler.gamma}"
+    #     )
 
     loss_mode = "none" if act_quant else "relaxation"
     rec_loss = opt_mode

@@ -1,0 +1,645 @@
+You are using fake SyncBatchNorm2d who is actually the official BatchNorm2d
+==> Using Pytorch Dataset
+Setting the first and the last layer to 8-bit
+Time for Setup: 4.04
+--Qparam----------------------------------------------------------
+Qparam | [W - W_q] L2.4 norm: 0.00000004, (0.81s)
+Qparam | [W - W_q] L2.4 norm: 0.00063020, (0.79s)
+Qparam | [W - W_q] L2.4 norm: 0.00229894, (0.78s)
+Qparam | [W - W_q] L2.4 norm: 0.00017027, (0.79s)
+Qparam | [W - W_q] L2.4 norm: 0.00286170, (0.79s)
+Qparam | [W - W_q] L2.4 norm: 0.00082689, (1.51s)
+Qparam | [W - W_q] L2.4 norm: 0.00013717, (1.57s)
+Qparam | [W - W_q] L2.4 norm: 0.00143421, (1.59s)
+Qparam | [W - W_q] L2.4 norm: 0.00055806, (1.60s)
+Qparam | [W - W_q] L2.4 norm: 0.00197131, (1.57s)
+Qparam | [W - W_q] L2.4 norm: 0.00036760, (3.05s)
+Qparam | [W - W_q] L2.4 norm: 0.00032447, (3.18s)
+Qparam | [W - W_q] L2.4 norm: 0.00128922, (3.24s)
+Qparam | [W - W_q] L2.4 norm: 0.00045704, (3.22s)
+Qparam | [W - W_q] L2.4 norm: 0.00253534, (3.24s)
+Qparam | [W - W_q] L2.4 norm: 0.00326537, (6.19s)
+Qparam | [W - W_q] L2.4 norm: 0.00030576, (6.44s)
+Qparam | [W - W_q] L2.4 norm: 0.00611855, (6.66s)
+Qparam | [W - W_q] L2.4 norm: 0.00029359, (6.56s)
+Qparam | [W - W_q] L2.4 norm: 0.34683239, (6.47s)
+Qparam | [W - W_q] L2.4 norm: 0.00001788, (11.65s)
+Time for Qparam: 71.83
+Test: [  0/782]	Time  0.683 ( 0.683)	Acc@1  79.69 ( 79.69)	Acc@5  90.62 ( 90.62)
+Test: [100/782]	Time  0.058 ( 0.060)	Acc@1  82.81 ( 58.14)	Acc@5  96.88 ( 80.79)
+Test: [200/782]	Time  0.018 ( 0.057)	Acc@1  54.69 ( 60.08)	Acc@5  82.81 ( 83.93)
+Test: [300/782]	Time  0.033 ( 0.057)	Acc@1  67.19 ( 60.66)	Acc@5  90.62 ( 84.17)
+Test: [400/782]	Time  0.022 ( 0.056)	Acc@1  43.75 ( 57.89)	Acc@5  65.62 ( 81.85)
+Test: [500/782]	Time  0.010 ( 0.056)	Acc@1  42.19 ( 56.65)	Acc@5  65.62 ( 80.33)
+Test: [600/782]	Time  0.305 ( 0.056)	Acc@1  62.50 ( 55.63)	Acc@5  82.81 ( 79.34)
+Test: [700/782]	Time  0.023 ( 0.055)	Acc@1  37.50 ( 54.72)	Acc@5  70.31 ( 78.52)
+ * Acc@1 54.104 Acc@5 77.884 Validate Time: 43.39s
+Quantized accuracy before brecq: 54.104000091552734
+Ignore reconstruction of layer conv1
+block 0 | [Wx - (W^~)x^] L2 norm:  0.3796
+block 1 | [Wx - (W^~)x^] L2 norm:  1.0246
+block 0 | [Wx - (W^~)x^] L2 norm:  0.7656
+block 1 | [Wx - (W^~)x^] L2 norm:  1.2097
+block 0 | [Wx - (W^~)x^] L2 norm:  1.2165
+block 1 | [Wx - (W^~)x^] L2 norm:  1.6530
+block 0 | [Wx - (W^~)x^] L2 norm:  3.0414
+block 1 | [Wx - (W^~)x^] L2 norm:  582.7122
+layer fc | [Wx - (W^~)x^] L2 norm: 835.8015
+Time for sensitivity measurement: 7.31
+--BRECQ----------------------------------------------------------
+Ignore reconstruction of layer conv1
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
+Total loss:	0.003 (rec:0.003, round:0.000)	b=0.00	count=500
+Total loss:	0.002 (rec:0.002, round:0.000)	b=0.00	count=1000
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=1500
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=2000
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=2500
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=3000
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=3500
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=4000
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=4500
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=5000
+Total loss:	0.001 (rec:0.001, round:0.000)	b=0.00	count=5500
+Total loss:	656.167 (rec:0.001, round:656.166)	b=20.00	count=6000
+Total loss:	321.132 (rec:0.003, round:321.130)	b=19.62	count=6500
+Total loss:	294.223 (rec:0.003, round:294.220)	b=19.25	count=7000
+Total loss:	277.142 (rec:0.003, round:277.140)	b=18.88	count=7500
+Total loss:	263.902 (rec:0.003, round:263.899)	b=18.50	count=8000
+Total loss:	251.697 (rec:0.004, round:251.694)	b=18.12	count=8500
+Total loss:	240.755 (rec:0.003, round:240.752)	b=17.75	count=9000
+Total loss:	230.668 (rec:0.004, round:230.665)	b=17.38	count=9500
+Total loss:	220.579 (rec:0.004, round:220.575)	b=17.00	count=10000
+Total loss:	211.344 (rec:0.004, round:211.340)	b=16.62	count=10500
+Total loss:	202.228 (rec:0.004, round:202.223)	b=16.25	count=11000
+Total loss:	193.150 (rec:0.004, round:193.146)	b=15.88	count=11500
+Total loss:	184.243 (rec:0.005, round:184.238)	b=15.50	count=12000
+Total loss:	175.228 (rec:0.005, round:175.223)	b=15.13	count=12500
+Total loss:	166.492 (rec:0.005, round:166.487)	b=14.75	count=13000
+Total loss:	157.692 (rec:0.005, round:157.687)	b=14.38	count=13500
+Total loss:	149.053 (rec:0.006, round:149.048)	b=14.00	count=14000
+Total loss:	140.191 (rec:0.007, round:140.184)	b=13.62	count=14500
+Total loss:	131.399 (rec:0.006, round:131.393)	b=13.25	count=15000
+Total loss:	122.559 (rec:0.007, round:122.553)	b=12.88	count=15500
+Total loss:	113.514 (rec:0.006, round:113.509)	b=12.50	count=16000
+Total loss:	104.738 (rec:0.006, round:104.732)	b=12.12	count=16500
+Total loss:	95.203 (rec:0.007, round:95.196)	b=11.75	count=17000
+Total loss:	86.104 (rec:0.008, round:86.095)	b=11.37	count=17500
+Total loss:	77.425 (rec:0.007, round:77.418)	b=11.00	count=18000
+Total loss:	69.204 (rec:0.007, round:69.197)	b=10.62	count=18500
+Total loss:	60.764 (rec:0.009, round:60.755)	b=10.25	count=19000
+Total loss:	52.800 (rec:0.010, round:52.790)	b=9.88	count=19500
+Total loss:	44.827 (rec:0.008, round:44.819)	b=9.50	count=20000
+Total loss:	36.609 (rec:0.012, round:36.598)	b=9.12	count=20500
+Total loss:	29.408 (rec:0.010, round:29.398)	b=8.75	count=21000
+Total loss:	23.290 (rec:0.010, round:23.280)	b=8.38	count=21500
+Total loss:	17.825 (rec:0.011, round:17.814)	b=8.00	count=22000
+Total loss:	13.078 (rec:0.013, round:13.064)	b=7.62	count=22500
+Total loss:	8.896 (rec:0.014, round:8.882)	b=7.25	count=23000
+Total loss:	5.643 (rec:0.014, round:5.629)	b=6.88	count=23500
+Total loss:	3.290 (rec:0.017, round:3.273)	b=6.50	count=24000
+Total loss:	1.691 (rec:0.014, round:1.677)	b=6.12	count=24500
+Total loss:	0.936 (rec:0.017, round:0.919)	b=5.75	count=25000
+Total loss:	0.445 (rec:0.015, round:0.430)	b=5.38	count=25500
+Total loss:	0.214 (rec:0.016, round:0.198)	b=5.00	count=26000
+Total loss:	0.124 (rec:0.019, round:0.105)	b=4.63	count=26500
+Total loss:	0.059 (rec:0.016, round:0.042)	b=4.25	count=27000
+Total loss:	0.027 (rec:0.016, round:0.011)	b=3.87	count=27500
+Total loss:	0.024 (rec:0.020, round:0.005)	b=3.50	count=28000
+Total loss:	0.021 (rec:0.021, round:0.000)	b=3.12	count=28500
+Total loss:	0.016 (rec:0.016, round:0.000)	b=2.75	count=29000
+Total loss:	0.014 (rec:0.014, round:0.000)	b=2.38	count=29500
+Total loss:	0.015 (rec:0.015, round:0.000)	b=2.00	count=30000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 64, 56, 56])
+Total loss:	0.026 (rec:0.026, round:0.000)	b=0.00	count=500
+Total loss:	0.030 (rec:0.030, round:0.000)	b=0.00	count=1000
+Total loss:	0.024 (rec:0.024, round:0.000)	b=0.00	count=1500
+Total loss:	0.026 (rec:0.026, round:0.000)	b=0.00	count=2000
+Total loss:	0.026 (rec:0.026, round:0.000)	b=0.00	count=2500
+Total loss:	0.023 (rec:0.023, round:0.000)	b=0.00	count=3000
+Total loss:	0.024 (rec:0.024, round:0.000)	b=0.00	count=3500
+Total loss:	0.024 (rec:0.024, round:0.000)	b=0.00	count=4000
+Total loss:	0.022 (rec:0.022, round:0.000)	b=0.00	count=4500
+Total loss:	0.023 (rec:0.023, round:0.000)	b=0.00	count=5000
+Total loss:	0.023 (rec:0.023, round:0.000)	b=0.00	count=5500
+Total loss:	664.762 (rec:0.020, round:664.742)	b=20.00	count=6000
+Total loss:	354.661 (rec:0.026, round:354.635)	b=19.62	count=6500
+Total loss:	326.105 (rec:0.027, round:326.078)	b=19.25	count=7000
+Total loss:	310.035 (rec:0.030, round:310.005)	b=18.88	count=7500
+Total loss:	297.471 (rec:0.026, round:297.445)	b=18.50	count=8000
+Total loss:	286.426 (rec:0.025, round:286.402)	b=18.12	count=8500
+Total loss:	276.689 (rec:0.024, round:276.665)	b=17.75	count=9000
+Total loss:	267.123 (rec:0.022, round:267.100)	b=17.38	count=9500
+Total loss:	257.775 (rec:0.025, round:257.749)	b=17.00	count=10000
+Total loss:	248.735 (rec:0.026, round:248.709)	b=16.62	count=10500
+Total loss:	240.056 (rec:0.024, round:240.032)	b=16.25	count=11000
+Total loss:	231.487 (rec:0.029, round:231.457)	b=15.88	count=11500
+Total loss:	223.321 (rec:0.026, round:223.295)	b=15.50	count=12000
+Total loss:	214.789 (rec:0.028, round:214.761)	b=15.13	count=12500
+Total loss:	206.537 (rec:0.029, round:206.507)	b=14.75	count=13000
+Total loss:	197.842 (rec:0.029, round:197.813)	b=14.38	count=13500
+Total loss:	188.919 (rec:0.034, round:188.885)	b=14.00	count=14000
+Total loss:	179.566 (rec:0.029, round:179.537)	b=13.62	count=14500
+Total loss:	170.286 (rec:0.032, round:170.254)	b=13.25	count=15000
+Total loss:	161.198 (rec:0.026, round:161.172)	b=12.88	count=15500
+Total loss:	151.882 (rec:0.034, round:151.848)	b=12.50	count=16000
+Total loss:	142.048 (rec:0.034, round:142.013)	b=12.12	count=16500
+Total loss:	132.141 (rec:0.038, round:132.102)	b=11.75	count=17000
+Total loss:	122.342 (rec:0.029, round:122.313)	b=11.37	count=17500
+Total loss:	112.114 (rec:0.030, round:112.084)	b=11.00	count=18000
+Total loss:	101.714 (rec:0.036, round:101.678)	b=10.62	count=18500
+Total loss:	91.250 (rec:0.034, round:91.216)	b=10.25	count=19000
+Total loss:	80.308 (rec:0.033, round:80.275)	b=9.88	count=19500
+Total loss:	69.161 (rec:0.033, round:69.128)	b=9.50	count=20000
+Total loss:	58.402 (rec:0.035, round:58.367)	b=9.12	count=20500
+Total loss:	48.317 (rec:0.034, round:48.283)	b=8.75	count=21000
+Total loss:	38.809 (rec:0.045, round:38.764)	b=8.38	count=21500
+Total loss:	30.374 (rec:0.038, round:30.336)	b=8.00	count=22000
+Total loss:	21.938 (rec:0.043, round:21.895)	b=7.62	count=22500
+Total loss:	15.725 (rec:0.046, round:15.679)	b=7.25	count=23000
+Total loss:	10.803 (rec:0.037, round:10.766)	b=6.88	count=23500
+Total loss:	6.860 (rec:0.043, round:6.817)	b=6.50	count=24000
+Total loss:	4.059 (rec:0.045, round:4.014)	b=6.12	count=24500
+Total loss:	2.128 (rec:0.043, round:2.085)	b=5.75	count=25000
+Total loss:	0.866 (rec:0.042, round:0.824)	b=5.38	count=25500
+Total loss:	0.314 (rec:0.045, round:0.269)	b=5.00	count=26000
+Total loss:	0.145 (rec:0.049, round:0.096)	b=4.63	count=26500
+Total loss:	0.099 (rec:0.051, round:0.049)	b=4.25	count=27000
+Total loss:	0.063 (rec:0.048, round:0.015)	b=3.87	count=27500
+Total loss:	0.046 (rec:0.040, round:0.006)	b=3.50	count=28000
+Total loss:	0.042 (rec:0.042, round:0.000)	b=3.12	count=28500
+Total loss:	0.046 (rec:0.046, round:0.000)	b=2.75	count=29000
+Total loss:	0.043 (rec:0.043, round:0.000)	b=2.38	count=29500
+Total loss:	0.043 (rec:0.043, round:0.000)	b=2.00	count=30000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 64, 56, 56]), Output data: torch.Size([1024, 128, 28, 28])
+Total loss:	0.021 (rec:0.021, round:0.000)	b=0.00	count=500
+Total loss:	0.021 (rec:0.021, round:0.000)	b=0.00	count=1000
+Total loss:	0.018 (rec:0.018, round:0.000)	b=0.00	count=1500
+Total loss:	0.017 (rec:0.017, round:0.000)	b=0.00	count=2000
+Total loss:	0.017 (rec:0.017, round:0.000)	b=0.00	count=2500
+Total loss:	0.016 (rec:0.016, round:0.000)	b=0.00	count=3000
+Total loss:	0.017 (rec:0.017, round:0.000)	b=0.00	count=3500
+Total loss:	0.015 (rec:0.015, round:0.000)	b=0.00	count=4000
+Total loss:	0.016 (rec:0.016, round:0.000)	b=0.00	count=4500
+Total loss:	0.015 (rec:0.015, round:0.000)	b=0.00	count=5000
+Total loss:	0.016 (rec:0.016, round:0.000)	b=0.00	count=5500
+Total loss:	2107.173 (rec:0.015, round:2107.158)	b=20.00	count=6000
+Total loss:	1040.511 (rec:0.021, round:1040.490)	b=19.62	count=6500
+Total loss:	950.322 (rec:0.020, round:950.302)	b=19.25	count=7000
+Total loss:	896.655 (rec:0.021, round:896.634)	b=18.88	count=7500
+Total loss:	855.904 (rec:0.022, round:855.882)	b=18.50	count=8000
+Total loss:	821.387 (rec:0.020, round:821.367)	b=18.12	count=8500
+Total loss:	790.428 (rec:0.022, round:790.405)	b=17.75	count=9000
+Total loss:	762.191 (rec:0.022, round:762.169)	b=17.38	count=9500
+Total loss:	735.697 (rec:0.025, round:735.672)	b=17.00	count=10000
+Total loss:	710.003 (rec:0.021, round:709.982)	b=16.62	count=10500
+Total loss:	684.323 (rec:0.023, round:684.300)	b=16.25	count=11000
+Total loss:	659.162 (rec:0.026, round:659.136)	b=15.88	count=11500
+Total loss:	633.822 (rec:0.025, round:633.797)	b=15.50	count=12000
+Total loss:	608.110 (rec:0.023, round:608.087)	b=15.13	count=12500
+Total loss:	582.362 (rec:0.027, round:582.336)	b=14.75	count=13000
+Total loss:	556.885 (rec:0.026, round:556.860)	b=14.38	count=13500
+Total loss:	530.067 (rec:0.029, round:530.038)	b=14.00	count=14000
+Total loss:	504.020 (rec:0.028, round:503.993)	b=13.62	count=14500
+Total loss:	476.903 (rec:0.026, round:476.877)	b=13.25	count=15000
+Total loss:	449.630 (rec:0.028, round:449.603)	b=12.88	count=15500
+Total loss:	420.586 (rec:0.028, round:420.558)	b=12.50	count=16000
+Total loss:	390.837 (rec:0.028, round:390.809)	b=12.12	count=16500
+Total loss:	361.239 (rec:0.029, round:361.209)	b=11.75	count=17000
+Total loss:	330.981 (rec:0.029, round:330.952)	b=11.37	count=17500
+Total loss:	300.680 (rec:0.032, round:300.647)	b=11.00	count=18000
+Total loss:	270.085 (rec:0.032, round:270.053)	b=10.62	count=18500
+Total loss:	239.246 (rec:0.030, round:239.216)	b=10.25	count=19000
+Total loss:	207.912 (rec:0.031, round:207.882)	b=9.88	count=19500
+Total loss:	178.263 (rec:0.035, round:178.227)	b=9.50	count=20000
+Total loss:	148.703 (rec:0.038, round:148.665)	b=9.12	count=20500
+Total loss:	121.113 (rec:0.038, round:121.075)	b=8.75	count=21000
+Total loss:	95.574 (rec:0.038, round:95.535)	b=8.38	count=21500
+Total loss:	72.300 (rec:0.036, round:72.264)	b=8.00	count=22000
+Total loss:	52.973 (rec:0.041, round:52.932)	b=7.62	count=22500
+Total loss:	36.379 (rec:0.044, round:36.335)	b=7.25	count=23000
+Total loss:	23.182 (rec:0.042, round:23.140)	b=6.88	count=23500
+Total loss:	12.798 (rec:0.044, round:12.754)	b=6.50	count=24000
+Total loss:	6.293 (rec:0.048, round:6.245)	b=6.12	count=24500
+Total loss:	2.303 (rec:0.044, round:2.258)	b=5.75	count=25000
+Total loss:	0.884 (rec:0.046, round:0.838)	b=5.38	count=25500
+Total loss:	0.442 (rec:0.048, round:0.394)	b=5.00	count=26000
+Total loss:	0.233 (rec:0.039, round:0.195)	b=4.63	count=26500
+Total loss:	0.143 (rec:0.046, round:0.097)	b=4.25	count=27000
+Total loss:	0.099 (rec:0.048, round:0.051)	b=3.87	count=27500
+Total loss:	0.071 (rec:0.045, round:0.026)	b=3.50	count=28000
+Total loss:	0.050 (rec:0.048, round:0.002)	b=3.12	count=28500
+Total loss:	0.040 (rec:0.040, round:0.000)	b=2.75	count=29000
+Total loss:	0.043 (rec:0.043, round:0.000)	b=2.38	count=29500
+Total loss:	0.045 (rec:0.045, round:0.000)	b=2.00	count=30000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 128, 28, 28])
+Total loss:	0.061 (rec:0.061, round:0.000)	b=0.00	count=500
+Total loss:	0.056 (rec:0.056, round:0.000)	b=0.00	count=1000
+Total loss:	0.052 (rec:0.052, round:0.000)	b=0.00	count=1500
+Total loss:	0.060 (rec:0.060, round:0.000)	b=0.00	count=2000
+Total loss:	0.053 (rec:0.053, round:0.000)	b=0.00	count=2500
+Total loss:	0.055 (rec:0.055, round:0.000)	b=0.00	count=3000
+Total loss:	0.061 (rec:0.061, round:0.000)	b=0.00	count=3500
+Total loss:	0.051 (rec:0.051, round:0.000)	b=0.00	count=4000
+Total loss:	0.052 (rec:0.052, round:0.000)	b=0.00	count=4500
+Total loss:	0.054 (rec:0.054, round:0.000)	b=0.00	count=5000
+Total loss:	0.052 (rec:0.052, round:0.000)	b=0.00	count=5500
+Total loss:	2660.272 (rec:0.051, round:2660.221)	b=20.00	count=6000
+Total loss:	1341.555 (rec:0.056, round:1341.499)	b=19.62	count=6500
+Total loss:	1236.601 (rec:0.058, round:1236.543)	b=19.25	count=7000
+Total loss:	1174.548 (rec:0.054, round:1174.495)	b=18.88	count=7500
+Total loss:	1126.640 (rec:0.054, round:1126.586)	b=18.50	count=8000
+Total loss:	1084.927 (rec:0.056, round:1084.871)	b=18.12	count=8500
+Total loss:	1046.684 (rec:0.058, round:1046.627)	b=17.75	count=9000
+Total loss:	1011.102 (rec:0.054, round:1011.048)	b=17.38	count=9500
+Total loss:	977.817 (rec:0.062, round:977.755)	b=17.00	count=10000
+Total loss:	945.615 (rec:0.061, round:945.553)	b=16.62	count=10500
+Total loss:	913.449 (rec:0.052, round:913.397)	b=16.25	count=11000
+Total loss:	883.262 (rec:0.058, round:883.204)	b=15.88	count=11500
+Total loss:	852.307 (rec:0.062, round:852.246)	b=15.50	count=12000
+Total loss:	820.940 (rec:0.056, round:820.885)	b=15.13	count=12500
+Total loss:	791.126 (rec:0.059, round:791.067)	b=14.75	count=13000
+Total loss:	759.798 (rec:0.056, round:759.742)	b=14.38	count=13500
+Total loss:	728.810 (rec:0.056, round:728.754)	b=14.00	count=14000
+Total loss:	696.389 (rec:0.060, round:696.329)	b=13.62	count=14500
+Total loss:	663.533 (rec:0.064, round:663.469)	b=13.25	count=15000
+Total loss:	630.541 (rec:0.056, round:630.485)	b=12.88	count=15500
+Total loss:	597.005 (rec:0.058, round:596.947)	b=12.50	count=16000
+Total loss:	562.996 (rec:0.059, round:562.937)	b=12.12	count=16500
+Total loss:	528.066 (rec:0.071, round:527.995)	b=11.75	count=17000
+Total loss:	492.161 (rec:0.063, round:492.098)	b=11.37	count=17500
+Total loss:	454.845 (rec:0.065, round:454.780)	b=11.00	count=18000
+Total loss:	416.984 (rec:0.062, round:416.922)	b=10.62	count=18500
+Total loss:	376.967 (rec:0.065, round:376.902)	b=10.25	count=19000
+Total loss:	336.645 (rec:0.066, round:336.579)	b=9.88	count=19500
+Total loss:	296.521 (rec:0.062, round:296.460)	b=9.50	count=20000
+Total loss:	256.742 (rec:0.060, round:256.683)	b=9.12	count=20500
+Total loss:	216.880 (rec:0.066, round:216.814)	b=8.75	count=21000
+Total loss:	178.702 (rec:0.068, round:178.635)	b=8.38	count=21500
+Total loss:	142.480 (rec:0.071, round:142.409)	b=8.00	count=22000
+Total loss:	107.663 (rec:0.067, round:107.596)	b=7.62	count=22500
+Total loss:	77.750 (rec:0.069, round:77.681)	b=7.25	count=23000
+Total loss:	52.051 (rec:0.073, round:51.977)	b=6.88	count=23500
+Total loss:	31.587 (rec:0.077, round:31.509)	b=6.50	count=24000
+Total loss:	15.899 (rec:0.071, round:15.828)	b=6.12	count=24500
+Total loss:	6.006 (rec:0.078, round:5.928)	b=5.75	count=25000
+Total loss:	1.755 (rec:0.072, round:1.683)	b=5.38	count=25500
+Total loss:	0.535 (rec:0.079, round:0.456)	b=5.00	count=26000
+Total loss:	0.246 (rec:0.073, round:0.173)	b=4.63	count=26500
+Total loss:	0.126 (rec:0.076, round:0.050)	b=4.25	count=27000
+Total loss:	0.096 (rec:0.081, round:0.015)	b=3.87	count=27500
+Total loss:	0.081 (rec:0.081, round:0.000)	b=3.50	count=28000
+Total loss:	0.071 (rec:0.071, round:0.000)	b=3.12	count=28500
+Total loss:	0.077 (rec:0.077, round:0.000)	b=2.75	count=29000
+Total loss:	0.072 (rec:0.072, round:0.000)	b=2.38	count=29500
+Total loss:	0.073 (rec:0.073, round:0.000)	b=2.00	count=30000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 128, 28, 28]), Output data: torch.Size([1024, 256, 14, 14])
+Total loss:	0.040 (rec:0.040, round:0.000)	b=0.00	count=500
+Total loss:	0.037 (rec:0.037, round:0.000)	b=0.00	count=1000
+Total loss:	0.035 (rec:0.035, round:0.000)	b=0.00	count=1500
+Total loss:	0.036 (rec:0.036, round:0.000)	b=0.00	count=2000
+Total loss:	0.038 (rec:0.038, round:0.000)	b=0.00	count=2500
+Total loss:	0.036 (rec:0.036, round:0.000)	b=0.00	count=3000
+Total loss:	0.033 (rec:0.033, round:0.000)	b=0.00	count=3500
+Total loss:	0.035 (rec:0.035, round:0.000)	b=0.00	count=4000
+Total loss:	0.036 (rec:0.036, round:0.000)	b=0.00	count=4500
+Total loss:	0.032 (rec:0.032, round:0.000)	b=0.00	count=5000
+Total loss:	0.034 (rec:0.034, round:0.000)	b=0.00	count=5500
+Total loss:	8476.076 (rec:0.038, round:8476.038)	b=20.00	count=6000
+Total loss:	4126.199 (rec:0.045, round:4126.154)	b=19.62	count=6500
+Total loss:	3817.308 (rec:0.040, round:3817.268)	b=19.25	count=7000
+Total loss:	3634.261 (rec:0.040, round:3634.221)	b=18.88	count=7500
+Total loss:	3490.974 (rec:0.040, round:3490.934)	b=18.50	count=8000
+Total loss:	3365.676 (rec:0.042, round:3365.634)	b=18.12	count=8500
+Total loss:	3252.759 (rec:0.039, round:3252.720)	b=17.75	count=9000
+Total loss:	3146.480 (rec:0.042, round:3146.439)	b=17.38	count=9500
+Total loss:	3044.389 (rec:0.040, round:3044.349)	b=17.00	count=10000
+Total loss:	2944.441 (rec:0.040, round:2944.401)	b=16.62	count=10500
+Total loss:	2847.679 (rec:0.041, round:2847.638)	b=16.25	count=11000
+Total loss:	2750.622 (rec:0.040, round:2750.582)	b=15.88	count=11500
+Total loss:	2656.489 (rec:0.037, round:2656.452)	b=15.50	count=12000
+Total loss:	2561.622 (rec:0.039, round:2561.583)	b=15.13	count=12500
+Total loss:	2467.269 (rec:0.041, round:2467.228)	b=14.75	count=13000
+Total loss:	2373.173 (rec:0.041, round:2373.132)	b=14.38	count=13500
+Total loss:	2277.945 (rec:0.041, round:2277.904)	b=14.00	count=14000
+Total loss:	2180.824 (rec:0.041, round:2180.783)	b=13.62	count=14500
+Total loss:	2082.375 (rec:0.040, round:2082.334)	b=13.25	count=15000
+Total loss:	1983.394 (rec:0.040, round:1983.353)	b=12.88	count=15500
+Total loss:	1881.107 (rec:0.046, round:1881.062)	b=12.50	count=16000
+Total loss:	1777.668 (rec:0.047, round:1777.621)	b=12.12	count=16500
+Total loss:	1672.755 (rec:0.048, round:1672.707)	b=11.75	count=17000
+Total loss:	1564.733 (rec:0.046, round:1564.687)	b=11.37	count=17500
+Total loss:	1455.752 (rec:0.046, round:1455.705)	b=11.00	count=18000
+Total loss:	1342.633 (rec:0.048, round:1342.585)	b=10.62	count=18500
+Total loss:	1228.184 (rec:0.049, round:1228.135)	b=10.25	count=19000
+Total loss:	1111.337 (rec:0.049, round:1111.288)	b=9.88	count=19500
+Total loss:	995.409 (rec:0.048, round:995.361)	b=9.50	count=20000
+Total loss:	876.359 (rec:0.049, round:876.310)	b=9.12	count=20500
+Total loss:	758.882 (rec:0.050, round:758.832)	b=8.75	count=21000
+Total loss:	643.156 (rec:0.058, round:643.098)	b=8.38	count=21500
+Total loss:	527.938 (rec:0.050, round:527.888)	b=8.00	count=22000
+Total loss:	420.417 (rec:0.051, round:420.367)	b=7.62	count=22500
+Total loss:	318.830 (rec:0.058, round:318.772)	b=7.25	count=23000
+Total loss:	225.306 (rec:0.056, round:225.250)	b=6.88	count=23500
+Total loss:	145.979 (rec:0.055, round:145.924)	b=6.50	count=24000
+Total loss:	80.579 (rec:0.055, round:80.524)	b=6.12	count=24500
+Total loss:	32.041 (rec:0.059, round:31.982)	b=5.75	count=25000
+Total loss:	8.405 (rec:0.062, round:8.343)	b=5.38	count=25500
+Total loss:	1.906 (rec:0.055, round:1.851)	b=5.00	count=26000
+Total loss:	0.644 (rec:0.054, round:0.590)	b=4.63	count=26500
+Total loss:	0.379 (rec:0.062, round:0.317)	b=4.25	count=27000
+Total loss:	0.254 (rec:0.057, round:0.197)	b=3.87	count=27500
+Total loss:	0.148 (rec:0.056, round:0.092)	b=3.50	count=28000
+Total loss:	0.082 (rec:0.060, round:0.022)	b=3.12	count=28500
+Total loss:	0.064 (rec:0.063, round:0.001)	b=2.75	count=29000
+Total loss:	0.054 (rec:0.054, round:0.000)	b=2.38	count=29500
+Total loss:	0.055 (rec:0.055, round:0.000)	b=2.00	count=30000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 256, 14, 14])
+Total loss:	0.063 (rec:0.063, round:0.000)	b=0.00	count=500
+Total loss:	0.067 (rec:0.067, round:0.000)	b=0.00	count=1000
+Total loss:	0.066 (rec:0.066, round:0.000)	b=0.00	count=1500
+Total loss:	0.064 (rec:0.064, round:0.000)	b=0.00	count=2000
+Total loss:	0.064 (rec:0.064, round:0.000)	b=0.00	count=2500
+Total loss:	0.062 (rec:0.062, round:0.000)	b=0.00	count=3000
+Total loss:	0.054 (rec:0.054, round:0.000)	b=0.00	count=3500
+Total loss:	0.057 (rec:0.057, round:0.000)	b=0.00	count=4000
+Total loss:	0.055 (rec:0.055, round:0.000)	b=0.00	count=4500
+Total loss:	0.057 (rec:0.057, round:0.000)	b=0.00	count=5000
+Total loss:	0.059 (rec:0.059, round:0.000)	b=0.00	count=5500
+Total loss:	10835.243 (rec:0.057, round:10835.186)	b=20.00	count=6000
+Total loss:	5268.641 (rec:0.058, round:5268.582)	b=19.62	count=6500
+Total loss:	4894.601 (rec:0.059, round:4894.542)	b=19.25	count=7000
+Total loss:	4671.448 (rec:0.061, round:4671.387)	b=18.88	count=7500
+Total loss:	4493.730 (rec:0.057, round:4493.673)	b=18.50	count=8000
+Total loss:	4335.500 (rec:0.063, round:4335.438)	b=18.12	count=8500
+Total loss:	4188.703 (rec:0.061, round:4188.643)	b=17.75	count=9000
+Total loss:	4049.179 (rec:0.059, round:4049.120)	b=17.38	count=9500
+Total loss:	3914.424 (rec:0.059, round:3914.365)	b=17.00	count=10000
+Total loss:	3783.056 (rec:0.060, round:3782.996)	b=16.62	count=10500
+Total loss:	3656.638 (rec:0.064, round:3656.574)	b=16.25	count=11000
+Total loss:	3529.207 (rec:0.065, round:3529.143)	b=15.88	count=11500
+Total loss:	3405.605 (rec:0.062, round:3405.543)	b=15.50	count=12000
+Total loss:	3281.525 (rec:0.059, round:3281.466)	b=15.13	count=12500
+Total loss:	3158.101 (rec:0.063, round:3158.039)	b=14.75	count=13000
+Total loss:	3033.405 (rec:0.062, round:3033.342)	b=14.38	count=13500
+Total loss:	2907.601 (rec:0.060, round:2907.541)	b=14.00	count=14000
+Total loss:	2781.116 (rec:0.056, round:2781.061)	b=13.62	count=14500
+Total loss:	2651.536 (rec:0.072, round:2651.464)	b=13.25	count=15000
+Total loss:	2521.759 (rec:0.065, round:2521.694)	b=12.88	count=15500
+Total loss:	2391.475 (rec:0.067, round:2391.407)	b=12.50	count=16000
+Total loss:	2259.192 (rec:0.063, round:2259.129)	b=12.12	count=16500
+Total loss:	2126.161 (rec:0.059, round:2126.103)	b=11.75	count=17000
+Total loss:	1992.524 (rec:0.067, round:1992.457)	b=11.37	count=17500
+Total loss:	1855.804 (rec:0.069, round:1855.734)	b=11.00	count=18000
+Total loss:	1717.827 (rec:0.064, round:1717.763)	b=10.62	count=18500
+Total loss:	1581.316 (rec:0.065, round:1581.251)	b=10.25	count=19000
+Total loss:	1442.175 (rec:0.064, round:1442.111)	b=9.88	count=19500
+Total loss:	1302.256 (rec:0.063, round:1302.193)	b=9.50	count=20000
+Total loss:	1161.333 (rec:0.067, round:1161.266)	b=9.12	count=20500
+Total loss:	1020.858 (rec:0.068, round:1020.790)	b=8.75	count=21000
+Total loss:	880.472 (rec:0.065, round:880.408)	b=8.38	count=21500
+Total loss:	743.533 (rec:0.065, round:743.468)	b=8.00	count=22000
+Total loss:	610.699 (rec:0.063, round:610.637)	b=7.62	count=22500
+Total loss:	483.347 (rec:0.063, round:483.283)	b=7.25	count=23000
+Total loss:	361.541 (rec:0.070, round:361.471)	b=6.88	count=23500
+Total loss:	250.957 (rec:0.069, round:250.888)	b=6.50	count=24000
+Total loss:	149.605 (rec:0.078, round:149.528)	b=6.12	count=24500
+Total loss:	68.534 (rec:0.071, round:68.463)	b=5.75	count=25000
+Total loss:	22.628 (rec:0.076, round:22.552)	b=5.38	count=25500
+Total loss:	5.867 (rec:0.074, round:5.793)	b=5.00	count=26000
+Total loss:	1.437 (rec:0.073, round:1.364)	b=4.63	count=26500
+Total loss:	0.498 (rec:0.066, round:0.432)	b=4.25	count=27000
+Total loss:	0.208 (rec:0.079, round:0.130)	b=3.87	count=27500
+Total loss:	0.115 (rec:0.076, round:0.039)	b=3.50	count=28000
+Total loss:	0.072 (rec:0.066, round:0.006)	b=3.12	count=28500
+Total loss:	0.068 (rec:0.068, round:0.000)	b=2.75	count=29000
+Total loss:	0.072 (rec:0.072, round:0.000)	b=2.38	count=29500
+Total loss:	0.074 (rec:0.074, round:0.000)	b=2.00	count=30000
+Reconstruction for block 0
+Init alpha to be FP32
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 256, 14, 14]), Output data: torch.Size([1024, 512, 7, 7])
+Total loss:	0.087 (rec:0.087, round:0.000)	b=0.00	count=500
+Total loss:	0.082 (rec:0.082, round:0.000)	b=0.00	count=1000
+Total loss:	0.076 (rec:0.076, round:0.000)	b=0.00	count=1500
+Total loss:	0.072 (rec:0.072, round:0.000)	b=0.00	count=2000
+Total loss:	0.064 (rec:0.064, round:0.000)	b=0.00	count=2500
+Total loss:	0.067 (rec:0.067, round:0.000)	b=0.00	count=3000
+Total loss:	0.057 (rec:0.057, round:0.000)	b=0.00	count=3500
+Total loss:	0.059 (rec:0.059, round:0.000)	b=0.00	count=4000
+Total loss:	0.051 (rec:0.051, round:0.000)	b=0.00	count=4500
+Total loss:	0.054 (rec:0.054, round:0.000)	b=0.00	count=5000
+Total loss:	0.051 (rec:0.051, round:0.000)	b=0.00	count=5500
+Total loss:	33500.312 (rec:0.049, round:33500.266)	b=20.00	count=6000
+Total loss:	16216.300 (rec:0.056, round:16216.244)	b=19.62	count=6500
+Total loss:	15060.032 (rec:0.055, round:15059.977)	b=19.25	count=7000
+Total loss:	14337.539 (rec:0.056, round:14337.482)	b=18.88	count=7500
+Total loss:	13748.690 (rec:0.051, round:13748.640)	b=18.50	count=8000
+Total loss:	13215.773 (rec:0.056, round:13215.718)	b=18.12	count=8500
+Total loss:	12713.751 (rec:0.055, round:12713.696)	b=17.75	count=9000
+Total loss:	12231.793 (rec:0.052, round:12231.741)	b=17.38	count=9500
+Total loss:	11761.024 (rec:0.051, round:11760.973)	b=17.00	count=10000
+Total loss:	11302.712 (rec:0.051, round:11302.661)	b=16.62	count=10500
+Total loss:	10855.476 (rec:0.051, round:10855.425)	b=16.25	count=11000
+Total loss:	10408.268 (rec:0.048, round:10408.220)	b=15.88	count=11500
+Total loss:	9966.278 (rec:0.050, round:9966.229)	b=15.50	count=12000
+Total loss:	9529.154 (rec:0.049, round:9529.105)	b=15.13	count=12500
+Total loss:	9096.896 (rec:0.051, round:9096.846)	b=14.75	count=13000
+Total loss:	8666.891 (rec:0.051, round:8666.840)	b=14.38	count=13500
+Total loss:	8237.342 (rec:0.050, round:8237.291)	b=14.00	count=14000
+Total loss:	7809.401 (rec:0.051, round:7809.351)	b=13.62	count=14500
+Total loss:	7382.247 (rec:0.052, round:7382.195)	b=13.25	count=15000
+Total loss:	6961.288 (rec:0.050, round:6961.238)	b=12.88	count=15500
+Total loss:	6548.959 (rec:0.052, round:6548.907)	b=12.50	count=16000
+Total loss:	6132.464 (rec:0.050, round:6132.415)	b=12.12	count=16500
+Total loss:	5721.564 (rec:0.054, round:5721.510)	b=11.75	count=17000
+Total loss:	5314.997 (rec:0.051, round:5314.946)	b=11.37	count=17500
+Total loss:	4912.306 (rec:0.052, round:4912.253)	b=11.00	count=18000
+Total loss:	4512.851 (rec:0.053, round:4512.798)	b=10.62	count=18500
+Total loss:	4116.420 (rec:0.056, round:4116.364)	b=10.25	count=19000
+Total loss:	3730.472 (rec:0.056, round:3730.416)	b=9.88	count=19500
+Total loss:	3343.358 (rec:0.053, round:3343.304)	b=9.50	count=20000
+Total loss:	2965.895 (rec:0.056, round:2965.839)	b=9.12	count=20500
+Total loss:	2599.399 (rec:0.058, round:2599.341)	b=8.75	count=21000
+Total loss:	2238.165 (rec:0.059, round:2238.106)	b=8.38	count=21500
+Total loss:	1894.972 (rec:0.060, round:1894.912)	b=8.00	count=22000
+Total loss:	1562.048 (rec:0.061, round:1561.987)	b=7.62	count=22500
+Total loss:	1247.408 (rec:0.065, round:1247.343)	b=7.25	count=23000
+Total loss:	951.824 (rec:0.063, round:951.761)	b=6.88	count=23500
+Total loss:	677.877 (rec:0.064, round:677.813)	b=6.50	count=24000
+Total loss:	427.411 (rec:0.065, round:427.346)	b=6.12	count=24500
+Total loss:	214.747 (rec:0.069, round:214.678)	b=5.75	count=25000
+Total loss:	77.775 (rec:0.071, round:77.704)	b=5.38	count=25500
+Total loss:	22.894 (rec:0.068, round:22.825)	b=5.00	count=26000
+Total loss:	6.782 (rec:0.072, round:6.710)	b=4.63	count=26500
+Total loss:	2.169 (rec:0.071, round:2.099)	b=4.25	count=27000
+Total loss:	0.774 (rec:0.072, round:0.702)	b=3.87	count=27500
+Total loss:	0.251 (rec:0.070, round:0.181)	b=3.50	count=28000
+Total loss:	0.104 (rec:0.070, round:0.034)	b=3.12	count=28500
+Total loss:	0.070 (rec:0.069, round:0.001)	b=2.75	count=29000
+Total loss:	0.064 (rec:0.064, round:0.000)	b=2.38	count=29500
+Total loss:	0.068 (rec:0.068, round:0.000)	b=2.00	count=30000
+Reconstruction for block 1
+Init alpha to be FP32
+Init alpha to be FP32
+Input data: torch.Size([1024, 512, 7, 7]), Output data: torch.Size([1024, 512, 7, 7])
+Total loss:	8.961 (rec:8.961, round:0.000)	b=0.00	count=500
+Total loss:	6.678 (rec:6.678, round:0.000)	b=0.00	count=1000
+Total loss:	5.661 (rec:5.661, round:0.000)	b=0.00	count=1500
+Total loss:	4.981 (rec:4.981, round:0.000)	b=0.00	count=2000
+Total loss:	4.974 (rec:4.974, round:0.000)	b=0.00	count=2500
+Total loss:	4.390 (rec:4.390, round:0.000)	b=0.00	count=3000
+Total loss:	4.323 (rec:4.323, round:0.000)	b=0.00	count=3500
+Total loss:	3.884 (rec:3.884, round:0.000)	b=0.00	count=4000
+Total loss:	3.835 (rec:3.835, round:0.000)	b=0.00	count=4500
+Total loss:	3.495 (rec:3.495, round:0.000)	b=0.00	count=5000
+Total loss:	3.576 (rec:3.576, round:0.000)	b=0.00	count=5500
+Total loss:	43583.852 (rec:3.225, round:43580.625)	b=20.00	count=6000
+Total loss:	27115.482 (rec:3.490, round:27111.992)	b=19.62	count=6500
+Total loss:	25488.064 (rec:2.974, round:25485.090)	b=19.25	count=7000
+Total loss:	24515.320 (rec:3.071, round:24512.250)	b=18.88	count=7500
+Total loss:	23744.943 (rec:3.326, round:23741.617)	b=18.50	count=8000
+Total loss:	23069.016 (rec:3.105, round:23065.910)	b=18.12	count=8500
+Total loss:	22440.797 (rec:3.128, round:22437.670)	b=17.75	count=9000
+Total loss:	21845.283 (rec:2.866, round:21842.418)	b=17.38	count=9500
+Total loss:	21271.410 (rec:2.790, round:21268.621)	b=17.00	count=10000
+Total loss:	20707.602 (rec:2.864, round:20704.738)	b=16.62	count=10500
+Total loss:	20154.373 (rec:3.026, round:20151.348)	b=16.25	count=11000
+Total loss:	19610.672 (rec:2.778, round:19607.895)	b=15.88	count=11500
+Total loss:	19072.275 (rec:2.746, round:19069.529)	b=15.50	count=12000
+Total loss:	18536.125 (rec:2.730, round:18533.395)	b=15.13	count=12500
+Total loss:	17997.533 (rec:2.769, round:17994.764)	b=14.75	count=13000
+Total loss:	17460.291 (rec:2.783, round:17457.508)	b=14.38	count=13500
+Total loss:	16918.188 (rec:2.691, round:16915.496)	b=14.00	count=14000
+Total loss:	16376.571 (rec:2.554, round:16374.018)	b=13.62	count=14500
+Total loss:	15829.858 (rec:2.837, round:15827.021)	b=13.25	count=15000
+Total loss:	15279.722 (rec:2.796, round:15276.926)	b=12.88	count=15500
+Total loss:	14723.548 (rec:2.755, round:14720.793)	b=12.50	count=16000
+Total loss:	14159.786 (rec:2.708, round:14157.078)	b=12.12	count=16500
+Total loss:	13595.793 (rec:2.775, round:13593.018)	b=11.75	count=17000
+Total loss:	13021.764 (rec:2.762, round:13019.002)	b=11.37	count=17500
+Total loss:	12437.743 (rec:2.747, round:12434.996)	b=11.00	count=18000
+Total loss:	11843.415 (rec:2.782, round:11840.633)	b=10.62	count=18500
+Total loss:	11241.329 (rec:2.869, round:11238.460)	b=10.25	count=19000
+Total loss:	10630.810 (rec:2.954, round:10627.855)	b=9.88	count=19500
+Total loss:	10007.616 (rec:3.091, round:10004.525)	b=9.50	count=20000
+Total loss:	9370.522 (rec:3.048, round:9367.475)	b=9.12	count=20500
+Total loss:	8727.465 (rec:3.211, round:8724.254)	b=8.75	count=21000
+Total loss:	8072.860 (rec:3.213, round:8069.647)	b=8.38	count=21500
+Total loss:	7400.100 (rec:3.308, round:7396.792)	b=8.00	count=22000
+Total loss:	6719.235 (rec:3.379, round:6715.855)	b=7.62	count=22500
+Total loss:	6026.745 (rec:3.546, round:6023.198)	b=7.25	count=23000
+Total loss:	5330.117 (rec:3.475, round:5326.642)	b=6.88	count=23500
+Total loss:	4627.105 (rec:3.866, round:4623.239)	b=6.50	count=24000
+Total loss:	3916.204 (rec:3.856, round:3912.348)	b=6.12	count=24500
+Total loss:	3214.953 (rec:3.999, round:3210.954)	b=5.75	count=25000
+Total loss:	2527.431 (rec:4.299, round:2523.132)	b=5.38	count=25500
+Total loss:	1871.517 (rec:4.133, round:1867.384)	b=5.00	count=26000
+Total loss:	1266.304 (rec:4.255, round:1262.048)	b=4.63	count=26500
+Total loss:	745.065 (rec:5.083, round:739.982)	b=4.25	count=27000
+Total loss:	346.232 (rec:5.388, round:340.845)	b=3.87	count=27500
+Total loss:	114.100 (rec:5.149, round:108.951)	b=3.50	count=28000
+Total loss:	31.924 (rec:5.007, round:26.917)	b=3.12	count=28500
+Total loss:	13.386 (rec:4.943, round:8.443)	b=2.75	count=29000
+Total loss:	9.094 (rec:5.217, round:3.877)	b=2.38	count=29500
+Total loss:	7.546 (rec:5.629, round:1.917)	b=2.00	count=30000
+Reconstruction for layer fc
+Init alpha to be FP32
+Input data: torch.Size([1024, 512]), Output data: torch.Size([1024, 1000])
+Total loss:	1.468 (rec:1.468, round:0.000)	b=0.00	count=500
+Total loss:	1.441 (rec:1.441, round:0.000)	b=0.00	count=1000
+Total loss:	1.477 (rec:1.477, round:0.000)	b=0.00	count=1500
+Total loss:	1.493 (rec:1.493, round:0.000)	b=0.00	count=2000
+Total loss:	1.373 (rec:1.373, round:0.000)	b=0.00	count=2500
+Total loss:	1.392 (rec:1.392, round:0.000)	b=0.00	count=3000
+Total loss:	1.310 (rec:1.310, round:0.000)	b=0.00	count=3500
+Total loss:	1.278 (rec:1.278, round:0.000)	b=0.00	count=4000
+Total loss:	1.293 (rec:1.293, round:0.000)	b=0.00	count=4500
+Total loss:	1.231 (rec:1.231, round:0.000)	b=0.00	count=5000
+Total loss:	1.433 (rec:1.433, round:0.000)	b=0.00	count=5500
+Total loss:	4550.928 (rec:1.164, round:4549.764)	b=20.00	count=6000
+Total loss:	2631.380 (rec:1.284, round:2630.096)	b=19.62	count=6500
+Total loss:	2456.741 (rec:1.314, round:2455.427)	b=19.25	count=7000
+Total loss:	2347.843 (rec:1.191, round:2346.652)	b=18.88	count=7500
+Total loss:	2257.642 (rec:1.188, round:2256.455)	b=18.50	count=8000
+Total loss:	2176.468 (rec:1.319, round:2175.149)	b=18.12	count=8500
+Total loss:	2097.169 (rec:1.250, round:2095.919)	b=17.75	count=9000
+Total loss:	2023.051 (rec:1.248, round:2021.804)	b=17.38	count=9500
+Total loss:	1951.207 (rec:1.294, round:1949.912)	b=17.00	count=10000
+Total loss:	1881.560 (rec:1.206, round:1880.354)	b=16.62	count=10500
+Total loss:	1813.146 (rec:1.187, round:1811.960)	b=16.25	count=11000
+Total loss:	1744.459 (rec:1.188, round:1743.272)	b=15.88	count=11500
+Total loss:	1678.160 (rec:1.178, round:1676.982)	b=15.50	count=12000
+Total loss:	1613.241 (rec:1.307, round:1611.934)	b=15.13	count=12500
+Total loss:	1549.592 (rec:1.203, round:1548.389)	b=14.75	count=13000
+Total loss:	1486.300 (rec:1.170, round:1485.130)	b=14.38	count=13500
+Total loss:	1424.033 (rec:1.170, round:1422.863)	b=14.00	count=14000
+Total loss:	1362.490 (rec:1.260, round:1361.230)	b=13.62	count=14500
+Total loss:	1301.793 (rec:1.126, round:1300.667)	b=13.25	count=15000
+Total loss:	1241.818 (rec:1.204, round:1240.614)	b=12.88	count=15500
+Total loss:	1182.945 (rec:1.190, round:1181.755)	b=12.50	count=16000
+Total loss:	1124.592 (rec:1.255, round:1123.337)	b=12.12	count=16500
+Total loss:	1066.895 (rec:1.269, round:1065.627)	b=11.75	count=17000
+Total loss:	1007.608 (rec:1.106, round:1006.502)	b=11.37	count=17500
+Total loss:	951.990 (rec:1.185, round:950.804)	b=11.00	count=18000
+Total loss:	897.112 (rec:1.170, round:895.942)	b=10.62	count=18500
+Total loss:	842.442 (rec:1.230, round:841.212)	b=10.25	count=19000
+Total loss:	788.851 (rec:1.213, round:787.639)	b=9.88	count=19500
+Total loss:	735.354 (rec:1.136, round:734.218)	b=9.50	count=20000
+Total loss:	682.704 (rec:1.195, round:681.509)	b=9.12	count=20500
+Total loss:	629.940 (rec:1.179, round:628.760)	b=8.75	count=21000
+Total loss:	578.252 (rec:1.194, round:577.059)	b=8.38	count=21500
+Total loss:	527.121 (rec:1.169, round:525.952)	b=8.00	count=22000
+Total loss:	476.267 (rec:1.213, round:475.054)	b=7.62	count=22500
+Total loss:	424.739 (rec:1.135, round:423.604)	b=7.25	count=23000
+Total loss:	374.738 (rec:1.119, round:373.619)	b=6.88	count=23500
+Total loss:	325.967 (rec:1.176, round:324.791)	b=6.50	count=24000
+Total loss:	277.047 (rec:1.166, round:275.881)	b=6.12	count=24500
+Total loss:	229.691 (rec:1.109, round:228.581)	b=5.75	count=25000
+Total loss:	182.160 (rec:1.147, round:181.013)	b=5.38	count=25500
+Total loss:	133.688 (rec:1.232, round:132.456)	b=5.00	count=26000
+Total loss:	88.123 (rec:1.205, round:86.918)	b=4.63	count=26500
+Total loss:	48.123 (rec:1.155, round:46.969)	b=4.25	count=27000
+Total loss:	20.029 (rec:1.166, round:18.863)	b=3.87	count=27500
+Total loss:	6.496 (rec:1.172, round:5.324)	b=3.50	count=28000
+Total loss:	2.172 (rec:1.204, round:0.968)	b=3.12	count=28500
+Total loss:	1.246 (rec:1.164, round:0.082)	b=2.75	count=29000
+Total loss:	1.107 (rec:1.105, round:0.001)	b=2.38	count=29500
+Total loss:	1.144 (rec:1.144, round:0.000)	b=2.00	count=30000
+Time for BRECQ: 873.59
+--Validation------------------------------------------------------
+Test: [  0/782]	Time  0.634 ( 0.634)	Acc@1  85.94 ( 85.94)	Acc@5  95.31 ( 95.31)
+Test: [100/782]	Time  0.037 ( 0.062)	Acc@1  84.38 ( 77.95)	Acc@5  98.44 ( 92.95)
+Test: [200/782]	Time  0.034 ( 0.058)	Acc@1  81.25 ( 77.71)	Acc@5  95.31 ( 93.96)
+Test: [300/782]	Time  0.114 ( 0.058)	Acc@1  75.00 ( 77.64)	Acc@5  98.44 ( 94.00)
+Test: [400/782]	Time  0.045 ( 0.056)	Acc@1  68.75 ( 74.67)	Acc@5  96.88 ( 92.30)
+Test: [500/782]	Time  0.010 ( 0.056)	Acc@1  81.25 ( 73.10)	Acc@5  93.75 ( 91.14)
+Test: [600/782]	Time  0.109 ( 0.055)	Acc@1  78.12 ( 71.83)	Acc@5  90.62 ( 90.38)
+Test: [700/782]	Time  0.022 ( 0.055)	Acc@1  70.31 ( 70.79)	Acc@5  90.62 ( 89.70)
+ * Acc@1 70.716 Acc@5 89.684 Validate Time: 43.19s
+Weight quantization accuracy: 70.71599578857422
+----------------------------------------------------------------
+Time for Setup: 4.04
+Time for Qparam: 71.83
+Time for BRECQ: 873.59
+Total time: 1043.36

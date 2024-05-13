@@ -8,7 +8,7 @@ import time
 import hubconf
 from quant import *
 from data.imagenet import build_imagenet_data
-import inspect, time
+import time
 
 
 def seed_all(seed=1029):

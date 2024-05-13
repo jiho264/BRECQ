@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import Union
-import inspect, time
+import time
 
 
 class StraightThrough(nn.Module):
@@ -152,6 +152,8 @@ class UniformAffineQuantizer(nn.Module):
                         best_score = score
                         delta = (new_max - new_min) / (2**self.n_bits - 1)
                         zero_point = (-new_min / delta).round()
+                # [My comment] have to addition cuz we do per-ch quantization
+                # best_score is the loss which each channel has
                 self._lp_loss += best_score
             else:
                 raise NotImplementedError
